@@ -1,5 +1,3 @@
-import React from "react";
-
 import headerStyles from "./AppHeader.module.css";
 
 import {
