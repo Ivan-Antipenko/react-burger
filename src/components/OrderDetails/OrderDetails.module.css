@@ -14,15 +14,6 @@
     align-items: center;
 }
 
-.modal_close_button {
-    top: 60px;
-    right: 40px;
-    position: absolute;
-    cursor: pointer;
-    border: none;
-    background-color: inherit;
-}
-
 .modal_button {
     background: url(../../../public/done.svg) no-repeat center center;
     width: 120px;

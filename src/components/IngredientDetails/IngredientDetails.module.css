@@ -8,14 +8,6 @@
     z-index: 4;
 }
 
-  .modal_close_button {
-    top: 50px;
-    right: 40px;
-    position: absolute;
-    cursor: pointer;
-    border: none;
-    background-color: inherit;
-}
 
 .modal_content {
     display: flex;

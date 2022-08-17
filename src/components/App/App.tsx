@@ -31,8 +31,8 @@ function App() {
   }, []);
 
 
-  const [IngridientModal, setIngridientModal] = useState(false);
-  const [OrderModal, setOrderModal] = useState(false);
+  const [isIngridientModalOpen, setIngridientModal] = useState(false);
+  const [isOrderModalOpen, setOrderModal] = useState(false);
 
 function openIngredientModal() {
   setIngridientModal(true)
@@ -68,14 +68,14 @@ function closeModal() {
         </main>
       )}
 
-      {OrderModal && (
-        <Modal closeModal={closeModal} openModal={openOrderModal} >
-          <OrderDetails closeModal={closeModal}/>
+      {isOrderModalOpen && (
+        <Modal closeModal={closeModal} isOpen={isOrderModalOpen} >
+          <OrderDetails />
         </Modal>     
       )}
-      {IngridientModal && (
-        <Modal closeModal={closeModal} openModal={openOrderModal}>
-          <IngredientDetails data={data.data[0]} closeModal={closeModal} />
+      {isIngridientModalOpen && (
+        <Modal closeModal={closeModal} isOpen={isIngridientModalOpen}>
+          <IngredientDetails data={data.data[0]} />
         </Modal>     
       )}
     </div>

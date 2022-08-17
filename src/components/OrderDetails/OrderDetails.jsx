@@ -2,13 +2,9 @@ import orderStyles from "./OrderDetails.module.css";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function OrderDetails({ closeModal }) {
+function OrderDetails() {
   return (
     <div className={`${orderStyles.modal_wrapper} pb-30 pt-30`}>
-      <button className={orderStyles.modal_close_button} onClick={closeModal}>
-        <CloseIcon type="primary" />
-      </button>
-
       <div className={orderStyles.content_wrapper}>
         <h1 className="text text_type_digits-large">034536</h1>
         <p className="text text_type_main-medium mt-8">Идентификатор заказа</p>
@@ -23,9 +19,5 @@ function OrderDetails({ closeModal }) {
     </div>
   );
 }
-
-OrderDetails.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-};
 
 export default OrderDetails;

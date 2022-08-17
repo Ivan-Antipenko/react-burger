@@ -7,7 +7,5 @@ export const checkRequest = (res) => {
 
 export function getData() {
   const url = "https://norma.nomoreparties.space/api/ingredients";
-  return fetch(url)
-    .then(checkRequest)
-    .catch((err) => console.log(`Ошибка: ${err}`));
+  return fetch(url).then(checkRequest);
 }

@@ -9,3 +9,18 @@
     justify-content: center;
     align-items: center;
 }
+
+.modal_wrapper {
+   position: relative;
+}
+
+.modal_close_button {
+    top: 50px;
+    right: 40px;
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    background-color: inherit;
+    padding: 0;
+    z-index: 5;
+}

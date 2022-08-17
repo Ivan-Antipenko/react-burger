@@ -2,15 +2,9 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ingredientStyles from "./IngredientDetails.module.css";
 
-function IngredientDetails({ data, closeModal }) {
+function IngredientDetails({ data }) {
   return (
     <div className={`${ingredientStyles.modal_wrapper} pb-15 pt-10`}>
-      <button
-        className={ingredientStyles.modal_close_button}
-        onClick={closeModal}
-      >
-        <CloseIcon type="primary" />
-      </button>
       <div className={ingredientStyles.modal_content}>
         <h3 className={`text text_type_main-large`}>Детали ингредиента</h3>
         <img className={ingredientStyles.image} src={data.image_large} />
@@ -40,8 +34,7 @@ function Ingredient(data) {
 }
 
 IngredientDetails.propTypes = {
-  data: PropTypes.array.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export default IngredientDetails;
