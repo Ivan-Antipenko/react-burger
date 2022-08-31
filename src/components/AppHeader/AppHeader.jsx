@@ -19,7 +19,9 @@ function Content() {
   return (
     <div className={headerStyles.header_сontent}>
       <NavBar />
-      <Logo />
+      <div className={headerStyles.header_logo_wrapper}>
+        <Logo />
+      </div>
       <UserCabinet />
     </div>
   );

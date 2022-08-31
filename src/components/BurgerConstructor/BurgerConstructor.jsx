@@ -1,4 +1,5 @@
 import constructorStyles from "./BurgerConstructor.module.css";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
@@ -8,7 +9,9 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function BurgerConstructor({ data, openModal }) {
+function BurgerConstructor({ openModal }) {
+  const data = useSelector((store) => store.ingredients.burgerIngredients);
+
   return (
     <section className={constructorStyles.constructor_section}>
       <ConstructorItems data={data} />
@@ -85,7 +88,6 @@ function ButtonPriceWrapper({ openModal }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array.isRequired,
   openModal: PropTypes.func.isRequired,
 };
 

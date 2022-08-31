@@ -25,6 +25,10 @@
   padding: 0;
 }
 
+.header_logo_wrapper {
+  margin-right: 150px;
+}
+
 .link_wrapper {
   display: flex;
   cursor: pointer;

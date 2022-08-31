@@ -6,9 +6,12 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerStyles from "./BurgerIngredients.module.css";
+import { useSelector } from "react-redux";
 
-function BurgerIngredients({ data, openModal }) {
+function BurgerIngredients({ openModal }) {
   const [current, setCurrent] = React.useState("bun");
+
+  const data = useSelector((store) => store.ingredients.burgerIngredients);
 
   const bunMenu = data.filter((el) => el.type === "bun");
   const sauceMenu = data.filter((el) => el.type === "sauce");
@@ -90,7 +93,6 @@ function IngredientsList({ data, openModal }) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.array.isRequired,
   openModal: PropTypes.func.isRequired,
 };
 
