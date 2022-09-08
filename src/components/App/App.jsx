@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../AppHeader/AppHeader";
 import appStyles from "../App/App.module.css";
@@ -8,6 +8,8 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
 import { getIngredients } from "../../services/actions/ingredients";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,24 +20,10 @@ function App() {
 
   const isLoading = useSelector((store) => store.ingredients.isLoading);
   const isError = useSelector((store) => store.ingredients.isError);
-
-  console.log(isLoading);
-
-  const [isIngridientModalOpen, setIngridientModal] = useState(false);
-  const [isOrderModalOpen, setOrderModal] = useState(false);
-
-  function openIngredientModal() {
-    setIngridientModal(true);
-  }
-
-  function openOrderModal() {
-    setOrderModal(true);
-  }
-
-  function closeModal() {
-    setIngridientModal(false);
-    setOrderModal(false);
-  }
+  const ingredientDetails = useSelector(
+    (store) => store.ingredientDetails.isModalOpen
+  );
+  const orderDetails = useSelector((store) => store.orderDetails.isModalOpen);
 
   return (
     <div className="page">
@@ -46,18 +34,20 @@ function App() {
 
       {!isLoading && !isError && (
         <main className={appStyles.wrapper}>
-          <BurgerIngredients openModal={openIngredientModal} />
-          <BurgerConstructor openModal={openOrderModal} />
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
         </main>
       )}
 
-      {isOrderModalOpen && (
-        <Modal closeModal={closeModal} isOpen={isOrderModalOpen}>
+      {orderDetails && (
+        <Modal>
           <OrderDetails />
         </Modal>
       )}
-      {isIngridientModalOpen && (
-        <Modal closeModal={closeModal} isOpen={isIngridientModalOpen}>
+      {ingredientDetails && (
+        <Modal>
           <IngredientDetails />
         </Modal>
       )}

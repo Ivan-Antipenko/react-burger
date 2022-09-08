@@ -1,30 +1,54 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-  Tab,
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { useEffect, useState } from "react";
+import { IngredientItem } from "../IngredientItem/IngredientItem";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerStyles from "./BurgerIngredients.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../../services/actions/ingredientsDetails";
+import { useInView } from "react-intersection-observer";
 
-function BurgerIngredients({ openModal }) {
-  const [current, setCurrent] = React.useState("bun");
+function BurgerIngredients() {
+  const [current, setCurrent] = useState("bun");
+
+  const [bunRef, bunView] = useInView({
+    threshold: 1,
+  });
+  const [sauceRef, sauceView] = useInView({
+    threshold: 1,
+  });
+  const [mainRef, mainView] = useInView({
+    threshold: 1,
+  });
+
+  const scrollTabClick = (e) => {
+    const section = document.getElementById(e);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleIngredientScroll = () => {
+    switch (true) {
+      case bunView:
+        setCurrent("bun");
+        break;
+      case sauceView:
+        setCurrent("sauce");
+        break;
+      case mainView:
+        setCurrent("main");
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    handleIngredientScroll();
+  }, [bunView, sauceView, mainView]);
 
   const data = useSelector((store) => store.ingredients.burgerIngredients);
 
   const bunMenu = data.filter((el) => el.type === "bun");
   const sauceMenu = data.filter((el) => el.type === "sauce");
   const mainMenu = data.filter((el) => el.type === "main");
-
-  const bunRef = React.useRef();
-  const sauceRef = React.useRef();
-  const mainRef = React.useRef();
-
-  function scrollTabClick(e, tab) {
-    setCurrent(e);
-    tab.current.scrollIntoView({ behavior: "smooth" });
-  }
 
   return (
     <section className={burgerStyles.ingredient_section}>
@@ -34,21 +58,21 @@ function BurgerIngredients({ openModal }) {
         <Tab
           value="bun"
           active={current === "bun"}
-          onClick={(e) => scrollTabClick(e, bunRef)}
+          onClick={(e) => scrollTabClick(e)}
         >
           Булки
         </Tab>
         <Tab
           value="sauce"
           active={current === "sauce"}
-          onClick={(e) => scrollTabClick(e, sauceRef)}
+          onClick={(e) => scrollTabClick(e)}
         >
           Соусы
         </Tab>
         <Tab
           value="main"
           active={current === "main"}
-          onClick={(e) => scrollTabClick(e, mainRef)}
+          onClick={(e) => scrollTabClick(e)}
         >
           Начинки
         </Tab>
@@ -58,42 +82,39 @@ function BurgerIngredients({ openModal }) {
         <h2 className="text text_type_main-medium mt-10" ref={bunRef}>
           Булки
         </h2>
-        <IngredientsList data={bunMenu} type="bun" openModal={openModal} />
+        <IngredientsList data={bunMenu} type="bun" />
         <h2 className="text text_type_main-medium mt-10" ref={sauceRef}>
           Соусы
         </h2>
-        <IngredientsList data={sauceMenu} type="sauce" openModal={openModal} />
+        <IngredientsList data={sauceMenu} type="sauce" />
         <h2 className="text text_type_main-medium mt-10" ref={mainRef}>
           Начинки
         </h2>
-        <IngredientsList data={mainMenu} type="main" openModal={openModal} />
+        <IngredientsList data={mainMenu} type="main" />
       </div>
     </section>
   );
 }
 
-function IngredientsList({ data, openModal }) {
+function IngredientsList({ data }) {
+  const dispatch = useDispatch();
+
+  function openDetailsModal(el) {
+    dispatch(openModal(el));
+  }
+
   return (
     <ul className={`${burgerStyles.menu_list} mt-6 ml-1 mr-1`}>
       {data.map((el) => (
-        <li key={el._id}>
-          <div className={burgerStyles.menu_item} onClick={openModal}>
-            <Counter />
-            <img className="ml-4 mr-4" src={el.image} />
-            <div className={`${burgerStyles.item_price_box} mt-1`}>
-              <p className="text text_type_digits-default mr-2">{el.price}</p>
-              <CurrencyIcon />
-            </div>
-            <h3 className="text text_type_main-default mt-1`">{el.name}</h3>
-          </div>
-        </li>
+        <IngredientItem
+          el={el}
+          openModal={openDetailsModal}
+          data={data}
+          key={el._id}
+        />
       ))}
     </ul>
   );
 }
-
-BurgerIngredients.propTypes = {
-  openModal: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;

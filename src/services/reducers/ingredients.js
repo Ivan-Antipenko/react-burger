@@ -1,6 +1,6 @@
 import { 
     INGREDIENTS_UPLOAD_REQUEST, 
-    INGREDIENTS_UPLOAD_SUCCES,
+    INGREDIENTS_UPLOAD_SUCCESS,
     INGREDIENTS_UPLOAD_FAILED 
 } from "../actions/ingredients";
 
@@ -22,7 +22,7 @@ export function ingredientsReducer(state = initialIngredientsState, action) {
                 isError: false,
             }
         }
-        case INGREDIENTS_UPLOAD_SUCCES: {
+        case INGREDIENTS_UPLOAD_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
