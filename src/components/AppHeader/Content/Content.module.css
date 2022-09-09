@@ -1,0 +1,12 @@
+.header_сontent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    max-height: 56px;
+    margin: auto;
+}
+
+.header_logo_wrapper {
+    margin-right: 170px;
+}

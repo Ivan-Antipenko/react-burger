@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { IngredientItem } from "../IngredientItem/IngredientItem";
+import { useEffect, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerStyles from "./BurgerIngredients.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../../services/actions/ingredientsDetails";
+import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
+import { IngredientsList } from "./IngredientList/IngredientsList";
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState("bun");
@@ -79,41 +78,32 @@ function BurgerIngredients() {
       </div>
 
       <div className={burgerStyles.ingredients_box}>
-        <h2 className="text text_type_main-medium mt-10" ref={bunRef}>
+        <h2
+          className="text text_type_main-medium mt-10"
+          ref={bunRef}
+          id={"bun"}
+        >
           Булки
         </h2>
         <IngredientsList data={bunMenu} type="bun" />
-        <h2 className="text text_type_main-medium mt-10" ref={sauceRef}>
+        <h2
+          className="text text_type_main-medium mt-10"
+          ref={sauceRef}
+          id={"sauce"}
+        >
           Соусы
         </h2>
         <IngredientsList data={sauceMenu} type="sauce" />
-        <h2 className="text text_type_main-medium mt-10" ref={mainRef}>
+        <h2
+          className="text text_type_main-medium mt-10"
+          ref={mainRef}
+          id={"main"}
+        >
           Начинки
         </h2>
         <IngredientsList data={mainMenu} type="main" />
       </div>
     </section>
-  );
-}
-
-function IngredientsList({ data }) {
-  const dispatch = useDispatch();
-
-  function openDetailsModal(el) {
-    dispatch(openModal(el));
-  }
-
-  return (
-    <ul className={`${burgerStyles.menu_list} mt-6 ml-1 mr-1`}>
-      {data.map((el) => (
-        <IngredientItem
-          el={el}
-          openModal={openDetailsModal}
-          data={data}
-          key={el._id}
-        />
-      ))}
-    </ul>
   );
 }
 
