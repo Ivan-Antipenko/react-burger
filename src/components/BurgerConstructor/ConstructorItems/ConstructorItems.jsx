@@ -26,7 +26,7 @@ export function ConstructorItems() {
       {!dataBun ? (
         <div className={constructorItemsStyles.constructor_list_empty}>
           <p className={constructorItemsStyles.constructor_list_empty_title}>
-            Перетащите нужную булку сюда...
+            Перетащите нужную булочку сюда
           </p>
         </div>
       ) : (

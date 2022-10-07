@@ -1,4 +1,4 @@
-import { getData } from "../../utils/data"
+import { getData } from "../../utils/api"
 
 export const INGREDIENTS_UPLOAD_REQUEST = 'INGREDIENTS_UPLOAD_REQUEST'
 export const INGREDIENTS_UPLOAD_SUCCESS = 'INGREDIENTS_UPLOAD_SUCCESS'

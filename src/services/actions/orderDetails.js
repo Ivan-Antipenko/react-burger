@@ -1,4 +1,4 @@
-import { getOrderNumber } from "../../utils/data"
+import { getOrderNumber } from "../../utils/api"
 
 export const ORDER_SENDING_REQUEST = 'ORDER_SENDING_REQUEST'
 export const ORDER_SENDING_SUCCESS = 'ORDER_SENDING_SUCCESS'
@@ -12,7 +12,6 @@ export function sendingOrder(ingredientsId) {
         })
         getOrderNumber(ingredientsId)
         .then((res) => {
-            console.log(res)
             dispatch({
                 type: ORDER_SENDING_SUCCESS,
                 data: res.order.number
