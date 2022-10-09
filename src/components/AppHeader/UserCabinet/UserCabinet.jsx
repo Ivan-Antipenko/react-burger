@@ -1,6 +1,6 @@
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import userCabinetStyles from "./UserCabinet.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 export function UserCabinet() {
   return (
     <NavLink

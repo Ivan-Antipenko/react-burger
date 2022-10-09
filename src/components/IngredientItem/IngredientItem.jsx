@@ -5,6 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export function IngredientItem({ el, openModal }) {
   let counter = 0;
@@ -33,17 +34,19 @@ export function IngredientItem({ el, openModal }) {
 
   return (
     !isDrag && (
-      <li ref={dragRef}>
-        <div className={burgerStyles.menu_item} onClick={() => openModal(el)}>
-          {counter > 0 && <Counter count={counter} />}
-          <img className="ml-4 mr-4" src={el.image} />
-          <div className={`${burgerStyles.item_price_box} mt-1`}>
-            <p className="text text_type_digits-default mr-2">{el.price}</p>
-            <CurrencyIcon />
+      <Link to={`/ingredients/${el._id}`}>
+        <li ref={dragRef}>
+          <div className={burgerStyles.menu_item} onClick={() => openModal(el)}>
+            {counter > 0 && <Counter count={counter} />}
+            <img className="ml-4 mr-4" src={el.image} />
+            <div className={`${burgerStyles.item_price_box} mt-1`}>
+              <p className="text text_type_digits-default mr-2">{el.price}</p>
+              <CurrencyIcon />
+            </div>
+            <h3 className="text text_type_main-default mt-1`">{el.name}</h3>
           </div>
-          <h3 className="text text_type_main-default mt-1`">{el.name}</h3>
-        </div>
-      </li>
+        </li>
+      </Link>
     )
   );
 }

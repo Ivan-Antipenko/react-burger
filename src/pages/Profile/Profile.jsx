@@ -1,30 +1,93 @@
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import {
+  Button,
+  Input,
+  PasswordInput,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect } from "react-router-dom";
+import { logout, updateUser } from "../../services/actions/register";
 
 import profileStyles from "./Profile.module.css";
 
 export function Profile() {
-  // const name = useSelector((store) => store.register.user.name);
-  // const email = useSelector((store) => store.register.user.email);
-  // const pass = useSelector((store) => store.register.user.pass);
+  const dispatch = useDispatch();
+  const password = localStorage.getItem("password");
+  const isLogin = useSelector((store) => store.register.isLogin);
+  const { email, name } = useSelector((store) => store.register.user);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    pass: "",
+  });
+
+  let [buttonSwitch, setSwitch] = useState(false);
+
+  function logoutUser() {
+    dispatch(logout());
+  }
+
+  function submitUserInfo(evt) {
+    evt.preventDefault();
+    dispatch(updateUser(form.name, form.email, form.pass));
+  }
+
+  function inputUser(evt) {
+    setForm({ ...form, [evt.target.name]: evt.target.value });
+    setSwitch((buttonSwitch = true));
+  }
+
+  function reset(evt) {
+    evt.preventDefault();
+    setForm({
+      email: email,
+      name: name,
+      pass: password,
+    });
+    setSwitch((buttonSwitch = false));
+  }
+
+  useEffect(() => {
+    setForm({
+      email: email,
+      name: name,
+      pass: password,
+    });
+  }, [email, name, password]);
+
+  if (!isLogin) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <section className={profileStyles.content_box}>
       <div className={profileStyles.menu_wrapper}>
         <ul className={profileStyles.menu_list}>
           <li>
-            <div className={profileStyles.menu_button}>
-              <p className="text text_type_main-medium">Профиль</p>
-            </div>
+            <NavLink
+              to="/profile"
+              className={`${profileStyles.menu_button} text text_type_main-medium`}
+              activeClassName={profileStyles.active_button}
+            >
+              Профиль
+            </NavLink>
           </li>
-          <li>
-            <div className={profileStyles.menu_button}>
-              <p className="text text_type_main-medium">История заказов</p>
-            </div>
+          <li className="mt-10">
+            <NavLink
+              to="/orders"
+              className={`${profileStyles.menu_button} text text_type_main-medium`}
+            >
+              История заказов
+            </NavLink>
           </li>
-          <li>
-            <div className={profileStyles.menu_button}>
-              <p className="text text_type_main-medium">Выход</p>
-            </div>
+          <li className="mt-10">
+            <NavLink
+              className={`${profileStyles.menu_button} text text_type_main-medium`}
+              onClick={logoutUser}
+              to="/login"
+            >
+              Выход
+            </NavLink>
           </li>
         </ul>
         <p className="text text_type_main-small text_color_inactive mt-20">
@@ -32,17 +95,45 @@ export function Profile() {
         </p>
       </div>
 
-      <div className="ml-15">
-        <div>
-          <Input placeholder="Имя" />
+      <form
+        className={`${profileStyles.inputs_wrapper} ml-15`}
+        onSubmit={submitUserInfo}
+      >
+        <div className={profileStyles.input}>
+          <Input
+            size="default"
+            placeholder="Имя"
+            icon={"EditIcon"}
+            value={form.name}
+            onChange={inputUser}
+            name="name"
+          />
         </div>
         <div className="mt-6">
-          <Input placeholder="Логин" />
+          <Input
+            placeholder="Логин"
+            icon={"EditIcon"}
+            value={form.email}
+            onChange={inputUser}
+            name="email"
+          />
         </div>
         <div className="mt-6">
-          <Input placeholder="Пароль" />
+          <PasswordInput
+            placeholder="Пароль"
+            icon={"EditIcon"}
+            value={form.pass}
+            onChange={inputUser}
+            name="pass"
+          />
         </div>
-      </div>
+        <div className={`${profileStyles.buttons_wrapper} mt-6`}>
+          <Button disabled={!buttonSwitch} onClick={reset}>
+            Отмена
+          </Button>
+          <Button disabled={!buttonSwitch}>Сохранить</Button>
+        </div>
+      </form>
     </section>
   );
 }

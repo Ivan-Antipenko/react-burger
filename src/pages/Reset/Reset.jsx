@@ -1,30 +1,67 @@
 import {
-  Input,
   Button,
-  ShowIcon,
+  Input,
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { resetPass } from "../../services/actions/register";
 
-import registerStyles from "./Register.module.css";
+import resetStyles from "./Reset.module.css";
 
-export function Register() {
+export function Reset() {
+  const dispatch = useDispatch();
+
+  const [pass, setPass] = useState("");
+  function onChangePass(evt) {
+    setPass(evt.target.value);
+  }
+
+  const [code, setCode] = useState("");
+  function onChangeCode(evt) {
+    setCode(evt.target.value);
+  }
+
+  function submitReset(evt) {
+    evt.preventDefault();
+    dispatch(resetPass(pass, code));
+  }
+
+  const isLogin = useSelector((store) => store.register.isLogin);
+
+  if (isLogin) {
+    return <Redirect to="/" />;
+  }
+
   return (
-    <section className={registerStyles.content_box}>
-      <form className={registerStyles.wrapper}>
-        <p className="text text_type_main-medium">Регистрация</p>
-        <div className={`${registerStyles.input_wrapper} mt-6`}>
-          <Input placeholder="Имя" />
+    <section className={resetStyles.content_box}>
+      <form className={resetStyles.wrapper} onSubmit={submitReset}>
+        <p className="text text_type_main-medium">Восстановление пароля</p>
+        <div className={`${resetStyles.input_wrapper} mt-6`}>
+          <PasswordInput
+            placeholder="Введите новый пароль"
+            name="pass"
+            onChange={onChangePass}
+            value={pass}
+          />
         </div>
         <div className="mt-6">
-          <Input placeholder="E-mail" />
+          <Input
+            placeholder="Введите код из письма"
+            name="code"
+            onChange={onChangeCode}
+            value={code}
+          />
         </div>
         <div className="mt-6">
-          <Input placeholder="Пароль" />
+          <Button>Сохранить</Button>
         </div>
-        <div className="mt-6">
-          <Button>Зарегистрироваться</Button>
-        </div>
-        <p className="text text_type_main-small mt-20">
-          Уже зарегистрированы? <a>Войти</a>
+        <p className="text text_type_main-default text_color_inactive mt-20">
+          Вспомнили пароль?{" "}
+          <Link className="text text_type_main-default" to="/login">
+            Войти
+          </Link>
         </p>
       </form>
     </section>

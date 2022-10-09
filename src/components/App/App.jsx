@@ -16,35 +16,27 @@ import { Register } from "../../pages/Register/Register";
 import { Profile } from "../../pages/Profile/Profile";
 import { Forgot } from "../../pages/Forgot/Forgot";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import {
-  CHECK_TOKEN_INVALID,
-  CHECK_TOKEN_VALID,
-} from "../../services/actions/register";
+import { getUserInfo, updateToken } from "../../services/actions/register";
 import { getCookie } from "../../utils/cookie";
+import { Reset } from "../../pages/Reset/Reset";
 
 function App() {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("refreshToken");
+  const cookie = getCookie("accessToken");
 
   useEffect(() => {
     dispatch(getIngredients());
   }, []);
 
   useEffect(() => {
-    checkToken();
-  }, []);
-
-  function checkToken() {
-    const token = getCookie("accessToken");
-    if (token) {
-      dispatch({
-        type: CHECK_TOKEN_VALID,
-      });
-    } else {
-      dispatch({
-        type: CHECK_TOKEN_INVALID,
-      });
+    if (!cookie && token) {
+      dispatch(updateToken());
     }
-  }
+    if (cookie && token) {
+      dispatch(getUserInfo());
+    }
+  }, [cookie, token, dispatch]);
 
   const isLoading = useSelector((store) => store.ingredients.isLoading);
   const isError = useSelector((store) => store.ingredients.isError);
@@ -58,10 +50,11 @@ function App() {
       <div className="page">
         <AppHeader />
         <Switch>
-          {isLoading && <h1 className={appStyles.message}>{`Загрузка...`}</h1>}
-          {isError && <h1>{`Ой, кажется что-то пошло не так :c`}</h1>}
-
           <Route path="/" exact={true}>
+            {isLoading && (
+              <h1 className={appStyles.message}>{`Загрузка...`}</h1>
+            )}
+            {isError && <h1>{`Ой, кажется что-то пошло не так :c`}</h1>}
             {!isLoading && !isError && (
               <main className={appStyles.wrapper}>
                 <DndProvider backend={HTML5Backend}>
@@ -86,6 +79,10 @@ function App() {
           <Route path="/forgot-password">
             <Forgot />
           </Route>
+
+          <Route path="/reset-password">
+            <Reset />
+          </Route>
         </Switch>
 
         {orderDetails && (
@@ -94,9 +91,11 @@ function App() {
           </Modal>
         )}
         {ingredientDetails && (
-          <Modal>
-            <IngredientDetails />
-          </Modal>
+          <Route path="/ingredients/:id">
+            <Modal>
+              <IngredientDetails />
+            </Modal>
+          </Route>
         )}
       </div>
     </Router>

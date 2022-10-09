@@ -1,4 +1,5 @@
 
+import { setCookie } from "../../utils/cookie";
 import {REGISTER_SENDING_REQUEST,
         REGISTER_SENDING_SUCCESS, 
         REGISTER_SENDING_FAILED,
@@ -7,12 +8,26 @@ import {REGISTER_SENDING_REQUEST,
         LOGIN_SENDING_SUCCESS,
         LOGIN_SENDING_FAILED,
         LOGIN_FORM_CHANGE_VALUE,
+        PROFILE_FORM_CHANGE_VALUE,
         UPDATE_TOKEN_REQUEST,
         UPDATE_TOKEN_SUCCESS,
         UPDATE_TOKEN_FAILED,
         CHECK_TOKEN_VALID,
-        CHECK_TOKEN_INVALID
-
+        CHECK_TOKEN_INVALID,
+        LOGOUT_SENDING_REQUEST,
+        LOGOUT_SENDING_SUCCESS,
+        RECOVERY_PASS_REQUEST,
+        RECOVERY_PASS_SUCCESS,
+        RECOVERY_PASS_FAILED,
+        GET_USER_REQUEST,
+        GET_USER_SUCCESS,
+        GET_USER_FAILED,
+        CHANGE_USER_REQUEST,
+        CHANGE_USER_SUCCESS,
+        CHANGE_USER_FAILED,
+        RESET_PASS_REQUEST,
+        RESET_PASS_SUCCESS,
+        RESET_PASS_FAILED
        } from "../actions/register";
 
 const initialState = {
@@ -20,7 +35,12 @@ const initialState = {
     isLoading: false,
     isError: false,
     isLogin: false,
-    user: null,
+    isRecoveryProcess: false,
+    user: {
+        email: '',
+        pass: '',
+        name: '',
+    },
 
     form: {
         email: "",
@@ -64,6 +84,15 @@ export function authReducer(state = initialState, action) {
                 }    
             }
         }
+        case PROFILE_FORM_CHANGE_VALUE: {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    [action.field]: action.value
+                }    
+            }
+        }
         case LOGIN_SENDING_REQUEST: {
             return {
                 ...state,
@@ -71,6 +100,11 @@ export function authReducer(state = initialState, action) {
             }
         }
         case LOGIN_SENDING_SUCCESS: {
+            const accessToken = action.data.accessToken.split("Bearer ")[1];
+            const refreshToken = action.data.refreshToken;
+            setCookie("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+            localStorage.setItem("password", state.form.pass);
             return {
                 ...state,
                 isLoading: false,
@@ -80,6 +114,13 @@ export function authReducer(state = initialState, action) {
                     email: '',
                     pass: '',
                 },
+
+                user: {
+                    ...state.user,
+                    email: action.data.user.email,
+                    name: action.data.user.name,
+                    pass: localStorage.getItem('password')
+                },
             }
         }
         case LOGIN_SENDING_FAILED: {
@@ -87,6 +128,19 @@ export function authReducer(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isError: true,
+
+            }
+        }
+        case LOGOUT_SENDING_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
+        case LOGOUT_SENDING_SUCCESS: {
+            return {
+                ...state,
+                isLogin: false,
             }
         }
         case LOGIN_FORM_CHANGE_VALUE: {
@@ -99,23 +153,28 @@ export function authReducer(state = initialState, action) {
             }
         }
         case UPDATE_TOKEN_REQUEST: {
+
             return {
                 ...state,
                    isLoading: true,  
             }
         }
         case UPDATE_TOKEN_SUCCESS: {
-            sessionStorage.setItem(action.token)
+            const newCoockie = action.data.accessToken.split("Bearer ")[1]
+            const newToken = action.data.refreshToken
+            localStorage.setItem("refreshToken", newToken);
+            setCookie('accessToken', newCoockie)
             return {
                 ...state,
                    isLoading: false,
+                   isLogin: true,
             }
         }
         case UPDATE_TOKEN_FAILED: {
             return {
                 ...state,
                    isLoading: false,
-                   isError: true
+                   isLogin: false
             }
         }
         case CHECK_TOKEN_VALID: {
@@ -128,6 +187,97 @@ export function authReducer(state = initialState, action) {
             return {
                 ...state,
                    isLogin: false
+            }
+        }
+        case RECOVERY_PASS_REQUEST: {
+            return {
+                ...state,
+                   isLoading: true,
+                   isRecoveryProcess: true
+            }
+        }
+        case RECOVERY_PASS_SUCCESS: {
+            return {
+                ...state,
+                   isLoading: false,
+            }
+        }
+        case RECOVERY_PASS_FAILED: {
+            return {
+                ...state,
+                   isLoading: false,
+                   isError: true
+            }
+        }
+        case RESET_PASS_REQUEST: {
+            return {
+                ...state,
+                   isLoading: true,
+            }
+        }
+        case RESET_PASS_SUCCESS: {
+            return {
+                ...state,
+                   isLoading: false,
+                   isRecoveryProcess: false
+            }
+        }
+        case RESET_PASS_FAILED: {
+            return {
+                ...state,
+                   isLoading: false,
+                   isRecoveryProcess: false,
+                   isError: true
+            }
+        }
+        case GET_USER_REQUEST: {
+            return {
+                ...state,
+                   isLoading: true,   
+            }
+        }
+        case GET_USER_SUCCESS: {
+            return {
+                ...state,
+                   user: {
+                    ...state.user,
+                    email: action.data.user.email,
+                    name: action.data.user.name,
+                    pass: localStorage.getItem('password')
+                   },
+                   isLoading: false,
+                   isLogin: true,
+            }
+        }
+        case GET_USER_FAILED: {
+            return {
+                ...state,
+                   isLogin: false  
+            }
+        }
+        case CHANGE_USER_REQUEST: { 
+            return {
+                ...state,
+                   isLoading: true 
+            }
+        }
+        case CHANGE_USER_SUCCESS: { 
+            return {
+                ...state,
+                   isLoading: false,
+                   user: {
+                    ...state.user,
+                    email: action.data.email,
+                    name: action.data.name,
+                    pass: localStorage.setItem('password')
+                   },
+            }
+        }
+        case CHANGE_USER_FAILED: { 
+            return {
+                ...state,
+                   isLoading: false,
+                   isError: true
             }
         }
         default: {

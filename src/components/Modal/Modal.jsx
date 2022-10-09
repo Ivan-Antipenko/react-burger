@@ -6,6 +6,7 @@ import modalStyles from "./Modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/orderDetails";
+import { Link } from "react-router-dom";
 
 const modalRoot = document.querySelector("#modal");
 
@@ -43,12 +44,14 @@ export default function Modal(props) {
   return createPortal(
     <div className={modalStyles.modal}>
       <div className={modalStyles.modal_wrapper}>
-        <button
-          className={modalStyles.modal_close_button}
-          onClick={closeModals}
-        >
-          <CloseIcon type="primary" />
-        </button>
+        <Link to="/">
+          <button
+            className={modalStyles.modal_close_button}
+            onClick={closeModals}
+          >
+            <CloseIcon type="primary" />
+          </button>
+        </Link>
         {props.children}
       </div>
       <ModalOverlay closeModal={closeModals} />

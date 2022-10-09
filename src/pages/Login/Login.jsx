@@ -1,17 +1,19 @@
 import {
-  Input,
   Button,
   PasswordInput,
+  EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { login, setLoginValue } from "../../services/actions/register";
+import { getCookie } from "../../utils/cookie";
 
 import loginStyles from "./Login.module.css";
 
 export function Login() {
   const dispatch = useDispatch();
 
+  const isLogin = useSelector((store) => store.register.isLogin);
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
 
@@ -24,12 +26,16 @@ export function Login() {
     dispatch(login(email, pass));
   }
 
+  if (isLogin) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <section className={loginStyles.content_box}>
       <form className={loginStyles.wrapper} onSubmit={submitLogin}>
         <p className="text text_type_main-medium">Вход</p>
         <div className="mt-6">
-          <Input
+          <EmailInput
             name="email"
             placeholder="E-mail"
             onChange={inputUser}
@@ -45,11 +51,14 @@ export function Login() {
           />
         </div>
         <div className="mt-6">
-          <Button>Войти</Button>
+          <Button disabled={!pass || !email}>Войти</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вы - новый пользователь?
-          <Link className="text text_type_main-default" to="/register">
+          <Link
+            className={`${loginStyles.link}"text text_type_main-default"`}
+            to="/register"
+          >
             {" "}
             Зарегистрироваться
           </Link>

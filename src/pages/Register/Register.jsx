@@ -5,13 +5,13 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { registration, setFormValue } from "../../services/actions/register";
 import registerStyles from "./Register.module.css";
 
 export function Register() {
   const dispatch = useDispatch();
-
+  const isLogin = useSelector((store) => store.register.isLogin);
   const name = useSelector((store) => store.register.form.name);
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
@@ -23,6 +23,10 @@ export function Register() {
   function submitForm(evt) {
     evt.preventDefault();
     dispatch(registration(name, email, pass));
+  }
+
+  if (isLogin) {
+    <Redirect to="/" />;
   }
 
   return (
@@ -54,7 +58,9 @@ export function Register() {
           />
         </div>
         <div className="mt-6">
-          <Button>Зарегистрироваться</Button>
+          <Button disabled={!name || !email || !pass}>
+            Зарегистрироваться
+          </Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Уже зарегистрированы?{" "}
