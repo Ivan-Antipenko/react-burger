@@ -1,6 +1,7 @@
 import {
   Button,
   EmailInput,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,11 +38,12 @@ export function Forgot() {
       <form className={registerStyles.wrapper} onSubmit={submitForgot}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <div className={`${registerStyles.input_wrapper} mt-6`}>
-          <EmailInput
+          <Input
             placeholder="Укажите e-mail"
             name="email"
             onChange={onChange}
             value={email}
+            type="email"
           />
         </div>
         <div className="mt-6">

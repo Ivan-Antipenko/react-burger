@@ -1,7 +1,7 @@
 import { INGREDIENTS_MODAL_CLOSE, INGREDIENTS_MODAL_OPENED } from "../actions/ingredientsDetails"
 
 const initialStateModal = {
-    isModalOpen: false
+    isModalOpen: false,
 }
 
 export function ingredientDetailReducer(state = initialStateModal, action) {
@@ -10,7 +10,7 @@ switch(action.type) {
        return {
             ...state,
             isModalOpen: true,
-            ingredient: action.ingredient
+            ingredient: action.ingredient,
        }
     }
     case INGREDIENTS_MODAL_CLOSE: {

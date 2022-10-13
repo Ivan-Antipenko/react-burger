@@ -23,7 +23,6 @@ export function IngredientItem({ el, openModal }) {
       counter++;
     }
   }
-
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
     item: el,
@@ -31,12 +30,12 @@ export function IngredientItem({ el, openModal }) {
       isDrag: monitor.isDragging(),
     }),
   });
-
+  // onClick={() => openModal(el)}
   return (
     !isDrag && (
       <Link to={`/ingredients/${el._id}`}>
         <li ref={dragRef}>
-          <div className={burgerStyles.menu_item} onClick={() => openModal(el)}>
+          <div className={burgerStyles.menu_item}>
             {counter > 0 && <Counter count={counter} />}
             <img className="ml-4 mr-4" src={el.image} />
             <div className={`${burgerStyles.item_price_box} mt-1`}>

@@ -29,6 +29,13 @@ export function Reset() {
   }
 
   const isLogin = useSelector((store) => store.register.isLogin);
+  const recoveryProcess = useSelector(
+    (store) => store.register.isRecoveryProcess
+  );
+
+  if (!recoveryProcess) {
+    return <Redirect to="/forgot-password" />;
+  }
 
   if (isLogin) {
     return <Redirect to="/" />;
@@ -39,11 +46,12 @@ export function Reset() {
       <form className={resetStyles.wrapper} onSubmit={submitReset}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <div className={`${resetStyles.input_wrapper} mt-6`}>
-          <PasswordInput
+          <Input
             placeholder="Введите новый пароль"
             name="pass"
             onChange={onChangePass}
             value={pass}
+            type="password"
           />
         </div>
         <div className="mt-6">
@@ -52,10 +60,11 @@ export function Reset() {
             name="code"
             onChange={onChangeCode}
             value={code}
+            type="text"
           />
         </div>
         <div className="mt-6">
-          <Button>Сохранить</Button>
+          <Button disabled={!pass || !code}>Сохранить</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вспомнили пароль?{" "}

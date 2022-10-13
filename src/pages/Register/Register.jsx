@@ -12,6 +12,9 @@ import registerStyles from "./Register.module.css";
 export function Register() {
   const dispatch = useDispatch();
   const isLogin = useSelector((store) => store.register.isLogin);
+  const registerCmplt = useSelector(
+    (store) => store.register.registrationComplete
+  );
   const name = useSelector((store) => store.register.form.name);
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
@@ -29,6 +32,10 @@ export function Register() {
     <Redirect to="/" />;
   }
 
+  if (registerCmplt) {
+    <Redirect to="/" />;
+  }
+
   return (
     <section className={registerStyles.content_box}>
       <form className={registerStyles.wrapper} onSubmit={submitForm}>
@@ -39,22 +46,25 @@ export function Register() {
             name={"name"}
             value={name}
             onChange={inputUser}
+            type="text"
           />
         </div>
         <div className="mt-6">
-          <EmailInput
+          <Input
             placeholder="E-mail"
             name={"email"}
             value={email}
             onChange={inputUser}
+            type="email"
           />
         </div>
         <div className="mt-6">
-          <PasswordInput
+          <Input
             placeholder="Пароль"
             name={"pass"}
             value={pass}
             onChange={inputUser}
+            type="password"
           />
         </div>
         <div className="mt-6">

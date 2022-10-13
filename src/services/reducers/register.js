@@ -36,6 +36,7 @@ const initialState = {
     isError: false,
     isLogin: false,
     isRecoveryProcess: false,
+    registrationComplete: false,
     user: {
         email: '',
         pass: '',
@@ -141,6 +142,7 @@ export function authReducer(state = initialState, action) {
             return {
                 ...state,
                 isLogin: false,
+                regisrationComplete: false,
             }
         }
         case LOGIN_FORM_CHANGE_VALUE: {
@@ -237,7 +239,7 @@ export function authReducer(state = initialState, action) {
             }
         }
         case GET_USER_SUCCESS: {
-            return {
+             return {
                 ...state,
                    user: {
                     ...state.user,
@@ -269,7 +271,7 @@ export function authReducer(state = initialState, action) {
                     ...state.user,
                     email: action.data.email,
                     name: action.data.name,
-                    pass: localStorage.setItem('password')
+                    pass: localStorage.getItem('password')
                    },
             }
         }

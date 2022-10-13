@@ -6,7 +6,7 @@ export function openModal(ingredient) {
     return function (dispatch) {
         dispatch({
             type: INGREDIENTS_MODAL_OPENED,
-            ingredient: ingredient
+            ingredient: ingredient,
         })
     }
 }

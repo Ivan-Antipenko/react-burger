@@ -27,6 +27,9 @@ function App() {
 
   useEffect(() => {
     dispatch(getIngredients());
+    if (!isLoading && !isLogin) {
+      dispatch(updateToken());
+    }
   }, []);
 
   useEffect(() => {
@@ -39,10 +42,9 @@ function App() {
   }, [cookie, token, dispatch]);
 
   const isLoading = useSelector((store) => store.ingredients.isLoading);
+  const isLogin = useSelector((store) => store.ingredients.isLogin);
   const isError = useSelector((store) => store.ingredients.isError);
-  const ingredientDetails = useSelector(
-    (store) => store.ingredientDetails.isModalOpen
-  );
+
   const orderDetails = useSelector((store) => store.orderDetails.isModalOpen);
 
   return (
@@ -90,13 +92,12 @@ function App() {
             <OrderDetails />
           </Modal>
         )}
-        {ingredientDetails && (
-          <Route path="/ingredients/:id">
-            <Modal>
-              <IngredientDetails />
-            </Modal>
-          </Route>
-        )}
+
+        <Route path="/ingredients/:id">
+          <Modal>
+            <IngredientDetails />
+          </Modal>
+        </Route>
       </div>
     </Router>
   );

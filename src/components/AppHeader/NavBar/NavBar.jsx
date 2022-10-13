@@ -11,9 +11,10 @@ export function NavBar() {
       <ul className={navBarStyles.nav_list}>
         <li>
           <NavLink
-            className={`${navBarStyles.link_wrapper} pt-4 pb-4 pl-5 pr-5`}
-            to={{ pathname: `/` }}
-            activeClassName="ml-2 text text_type_main-default"
+            className={`${navBarStyles.link_wrapper} pt-4 pb-4 pl-5 pr-5 ml-2 text text_type_main-default`}
+            to="/"
+            activeClassName={navBarStyles.link_wrapper_active}
+            exact
           >
             <BurgerIcon type="primary" />
             <p className="ml-2 text text_type_main-default">Конструктор</p>

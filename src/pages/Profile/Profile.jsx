@@ -1,7 +1,6 @@
 import {
   Button,
   Input,
-  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +29,7 @@ export function Profile() {
   function submitUserInfo(evt) {
     evt.preventDefault();
     dispatch(updateUser(form.name, form.email, form.pass));
+    setSwitch((buttonSwitch = false));
   }
 
   function inputUser(evt) {
@@ -107,6 +107,7 @@ export function Profile() {
             value={form.name}
             onChange={inputUser}
             name="name"
+            type="text"
           />
         </div>
         <div className="mt-6">
@@ -116,15 +117,17 @@ export function Profile() {
             value={form.email}
             onChange={inputUser}
             name="email"
+            type="email"
           />
         </div>
         <div className="mt-6">
-          <PasswordInput
+          <Input
             placeholder="Пароль"
             icon={"EditIcon"}
             value={form.pass}
             onChange={inputUser}
             name="pass"
+            type="password"
           />
         </div>
         <div className={`${profileStyles.buttons_wrapper} mt-6`}>

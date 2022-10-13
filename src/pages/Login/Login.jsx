@@ -2,6 +2,7 @@ import {
   Button,
   PasswordInput,
   EmailInput,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -35,19 +36,21 @@ export function Login() {
       <form className={loginStyles.wrapper} onSubmit={submitLogin}>
         <p className="text text_type_main-medium">Вход</p>
         <div className="mt-6">
-          <EmailInput
+          <Input
             name="email"
             placeholder="E-mail"
             onChange={inputUser}
             value={email}
+            type="email"
           />
         </div>
         <div className="mt-6">
-          <PasswordInput
+          <Input
             name="pass"
             placeholder="Пароль"
             onChange={inputUser}
             value={pass}
+            type="password"
           />
         </div>
         <div className="mt-6">

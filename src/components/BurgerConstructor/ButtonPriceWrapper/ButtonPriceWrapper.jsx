@@ -7,6 +7,7 @@ import { sendingOrder } from "../../../services/actions/orderDetails";
 import ButtonPriceWrapperStyles from "./ButtonPriceWrapper.module.css";
 
 export function ButtonPriceWrapper() {
+  const isLogin = useSelector((store) => store.register.isLogin);
   const dispatch = useDispatch();
   function sendOrder(orderId) {
     dispatch(sendingOrder(orderId));
@@ -27,15 +28,21 @@ export function ButtonPriceWrapper() {
         <p className="text text_type_digits-medium mr-2">{cash}</p>
         <CurrencyIcon type="primary" size="large" />
       </div>
-      {ingredients.length === 0 ? (
-        <Button type="primary" size="large" disabled>
+      <div>
+        <Button
+          type="primary"
+          size="large"
+          disabled={!isLogin || ingredients.length === 0}
+          onClick={() => sendOrder(orderId)}
+        >
           Оформить заказ
         </Button>
-      ) : (
-        <Button type="primary" size="large" onClick={() => sendOrder(orderId)}>
-          Оформить заказ
-        </Button>
-      )}
+        {!isLogin && (
+          <p className="text text_type_main-default mt-5">
+            Авторизуйтесь, что-бы сделать заказ
+          </p>
+        )}
+      </div>
     </div>
   );
 }
