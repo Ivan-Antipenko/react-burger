@@ -36,6 +36,7 @@ const initialState = {
     isError: false,
     isLogin: false,
     isRecoveryProcess: false,
+    isRecoveryProcessComplete: false,
     registrationComplete: false,
     user: {
         email: '',
@@ -67,8 +68,10 @@ export function authReducer(state = initialState, action) {
                     email: "",
                     pass: "",
                     name: ""
-                }
+                },
+                registrationComplete: true,
             }
+            
         }
         case REGISTER_SENDING_FAILED: {
             return {
@@ -195,13 +198,14 @@ export function authReducer(state = initialState, action) {
             return {
                 ...state,
                    isLoading: true,
-                   isRecoveryProcess: true
+                   
             }
         }
         case RECOVERY_PASS_SUCCESS: {
             return {
                 ...state,
                    isLoading: false,
+                   isRecoveryProcess: true
             }
         }
         case RECOVERY_PASS_FAILED: {
@@ -221,7 +225,8 @@ export function authReducer(state = initialState, action) {
             return {
                 ...state,
                    isLoading: false,
-                   isRecoveryProcess: false
+                   isRecoveryProcess: false,
+                   isRecoveryProcessComplete: true
             }
         }
         case RESET_PASS_FAILED: {

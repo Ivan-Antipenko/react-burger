@@ -1,5 +1,6 @@
+
 import { getUser, loginRequest, logoutRequest, recoveryPass, refreshToken, registerRequest, resetPassRequest, updateUserInfo } from "../../utils/api"
-import { deleteCookie, getCookie} from "../../utils/cookie"
+import { deleteCookie, getCookie, setCookie} from "../../utils/cookie"
 export const REGISTER_FORM_CHANGE_VALUE = 'REGISTER_FORM_CHANGE_VALUE'
 export const PROFILE_FORM_CHANGE_VALUE = 'PROFILE_FORM_SET_VALUE'
 export const LOGIN_FORM_CHANGE_VALUE = 'LOGIN_FORM_SET_VALUE'

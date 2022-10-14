@@ -15,6 +15,7 @@ export function Register() {
   const registerCmplt = useSelector(
     (store) => store.register.registrationComplete
   );
+
   const name = useSelector((store) => store.register.form.name);
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
@@ -29,11 +30,11 @@ export function Register() {
   }
 
   if (isLogin) {
-    <Redirect to="/" />;
+    return <Redirect to="/" />;
   }
 
   if (registerCmplt) {
-    <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 
   return (

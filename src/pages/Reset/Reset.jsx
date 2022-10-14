@@ -32,13 +32,20 @@ export function Reset() {
   const recoveryProcess = useSelector(
     (store) => store.register.isRecoveryProcess
   );
+  const recoveryProcessCmplt = useSelector(
+    (store) => store.register.isRecoveryProcessComplete
+  );
 
-  if (!recoveryProcess) {
+  if (!recoveryProcess && !recoveryProcessCmplt) {
     return <Redirect to="/forgot-password" />;
   }
 
   if (isLogin) {
     return <Redirect to="/" />;
+  }
+
+  if (recoveryProcessCmplt && !recoveryProcess) {
+    return <Redirect to="/login" />;
   }
 
   return (

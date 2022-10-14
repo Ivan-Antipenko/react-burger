@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function IngredientItem({ el, openModal }) {
   let counter = 0;
@@ -30,10 +30,17 @@ export function IngredientItem({ el, openModal }) {
       isDrag: monitor.isDragging(),
     }),
   });
-  // onClick={() => openModal(el)}
+
+  const location = useLocation();
+
   return (
     !isDrag && (
-      <Link to={`/ingredients/${el._id}`}>
+      <Link
+        to={{
+          pathname: `/ingredients/${el._id}`,
+          state: { background: location },
+        }}
+      >
         <li ref={dragRef}>
           <div className={burgerStyles.menu_item}>
             {counter > 0 && <Counter count={counter} />}
