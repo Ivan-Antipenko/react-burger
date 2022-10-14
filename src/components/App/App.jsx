@@ -31,8 +31,8 @@ function App() {
   const orderDetails = useSelector((store) => store.orderDetails.isModalOpen);
 
   useEffect(() => {
-    dispatch(getUserInfo());
     dispatch(getIngredients());
+    dispatch(getUserInfo());
     if (!isLogin) {
       dispatch(updateToken());
     }

@@ -203,6 +203,19 @@ export function getUserInfo() {
             dispatch({
                 type: GET_USER_FAILED,
             })
+            const token = localStorage.getItem('refreshToken')
+            refreshToken(token)
+            .then((res) => {
+                dispatch({
+                    type: UPDATE_TOKEN_SUCCESS,
+                    data: res
+                })
+            })
+            .catch(() => {
+                dispatch({
+                    type: UPDATE_TOKEN_FAILED
+                })
+            })
         })
     }
 }
@@ -221,9 +234,29 @@ export function updateUser(name, email, pass) {
           });
         })
         .catch(() => {
-          dispatch({
-            type: CHANGE_USER_FAILED,
-          });
+          const token = localStorage.getItem('refreshToken')
+            refreshToken(token)
+            .then((res) => {
+                dispatch({
+                    type: UPDATE_TOKEN_SUCCESS,
+                    data: res
+                })
+            })
+            .then(() => {
+                const token = getCookie("accessToken")
+                updateUserInfo(name, email, pass, token)
+                .then((res) => {
+                    dispatch({
+                        type: CHANGE_USER_SUCCESS,
+                        data: res.user,
+                      });
+                })
+            })
+            .catch(() => {
+                dispatch({
+                    type: CHANGE_USER_FAILED,
+                  });
+            })
         });
     };
   }
