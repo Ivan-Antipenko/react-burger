@@ -18,6 +18,7 @@ import { Forgot } from "../../pages/Forgot/Forgot";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { getUserInfo, updateToken } from "../../services/actions/register";
 import { Reset } from "../../pages/Reset/Reset";
+import { Feed } from "../Feed/Feed";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,10 +34,11 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUserInfo());
-    if (!isLogin) {
-      dispatch(updateToken());
-    }
   }, []);
+
+  useEffect(() => {
+    dispatch(updateToken());
+  }, [isLogin]);
 
   return (
     <div className="page">
@@ -72,6 +74,10 @@ function App() {
 
         <Route path="/reset-password" exact>
           <Reset />
+        </Route>
+
+        <Route path="/feed" exact>
+          <Feed />
         </Route>
       </Switch>
 

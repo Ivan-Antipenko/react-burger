@@ -1,0 +1,13 @@
+.feed_item {
+    width: 584px;
+    background-color: #1C1C21;
+}
+
+.content_wrapper {
+    width: 536px;
+}
+
+.tittle_wrapper {
+    display: flex;
+    justify-content: space-between;
+}

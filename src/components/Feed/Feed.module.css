@@ -1,0 +1,8 @@
+.feed_section {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.content_wrapper {
+    display: flex;
+}

@@ -203,11 +203,19 @@ export function getUserInfo() {
             dispatch({
                 type: GET_USER_FAILED,
             })
-            const token = localStorage.getItem('refreshToken')
-            refreshToken(token)
+            const refToken = localStorage.getItem('refreshToken')
+            refreshToken(refToken)
             .then((res) => {
                 dispatch({
                     type: UPDATE_TOKEN_SUCCESS,
+                    data: res
+                })
+            })
+            const newToken = getCookie("accessToken")
+            getUser(newToken)
+            .then((res) => {
+                dispatch({
+                    type: GET_USER_SUCCESS,
                     data: res
                 })
             })
