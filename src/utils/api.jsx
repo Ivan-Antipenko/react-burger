@@ -1,3 +1,5 @@
+import { getCookie } from "./cookie";
+
 export const checkRequest = (res) => {
   if (res.ok) {
     return res.json();
@@ -19,6 +21,7 @@ export function getOrderNumber(ingredientsId) {
     }),
     headers: {
       "Content-Type": "application/json",
+      authorization: "Bearer " + getCookie("accessToken"),
     },
   }).then(checkRequest);
 }

@@ -19,7 +19,8 @@ import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { getUserInfo, updateToken } from "../../services/actions/register";
 import { Reset } from "../../pages/Reset/Reset";
 import { Feed } from "../Feed/Feed";
-
+import { wsConnectedStart } from "../../services/actions/wsActions";
+import { FeedDetails } from "../FeedsDetails/FeedsDetails";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUserInfo());
+    dispatch(wsConnectedStart());
   }, []);
 
   useEffect(() => {
@@ -80,6 +82,12 @@ function App() {
           <Feed />
         </Route>
       </Switch>
+
+      <Route path="/feed/:id">
+        <Modal>
+          <FeedDetails />
+        </Modal>
+      </Route>
 
       <Route path="/ingredients/:id">
         <Modal>

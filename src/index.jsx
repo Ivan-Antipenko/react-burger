@@ -11,11 +11,17 @@ import { rootReducer } from "./services/root-reducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
+import { socketMiddleware } from "./services/middleware/socketMiddleware";
 
 const composeEnhancers =
   (window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  applyMiddleware(
+    socketMiddleware("wss://norma.nomoreparties.space/orders/all")
+  )
+);
 const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -1,0 +1,33 @@
+.wrapper {
+    z-index: 4;
+    position: relative;
+    width: 640px;
+}
+
+.number {
+    text-align: center;
+}
+
+.ingr_wrapper {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.ingr_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.price_wrapper {
+    display: flex;
+}

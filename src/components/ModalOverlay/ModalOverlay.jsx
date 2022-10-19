@@ -1,12 +1,20 @@
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import overlayStyles from "./ModalOverlay.module.css";
 
 export function ModalOverlay(props) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  function closeOverlay() {
+    dispatch(closeIngredientModal());
+    history.goBack();
+  }
+
   return (
-    <Link to="/">
-      <div className={overlayStyles.overlay} onClick={props.closeModal}>
-        {props.children}
-      </div>
-    </Link>
+    <div className={overlayStyles.overlay} onClick={closeOverlay}>
+      {props.children}
+    </div>
   );
 }

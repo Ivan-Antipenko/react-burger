@@ -14,7 +14,6 @@ export function ConstructorItems() {
       dispatch(addIngredients(item, dataBun));
     },
   });
-
   const dataBun = useSelector((store) => store.burgerConstructor.bun);
   const ingredients = useSelector((store) => store.burgerConstructor.items);
 

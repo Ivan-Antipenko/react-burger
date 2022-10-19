@@ -2,6 +2,7 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT'
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT'
 export const ADD_INGREDIENT_BUN = 'ADD_INGREDIENT_BUN'
 export const DROP_INGREDIENT = 'MOVE_INGREDIENT_BUN'
+export const CLEAR_INGREDIENT_LIST = 'CLEAR_INGREDIENT_LIST'
 
 export function addIngredients(item, dataBun) {
    return function(dispatch){

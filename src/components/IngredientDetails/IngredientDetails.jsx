@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Ingredient } from "./Ingredient/Ingredient";
 
 import ingredientDetailsStyles from "./IngredientDetails.module.css";
@@ -8,7 +8,6 @@ function IngredientDetails() {
   const data = useSelector((store) => store.ingredients.burgerIngredients);
   const { id } = useParams();
   const item = data?.find((el) => el._id === id);
-  console.log("sdsd");
 
   return (
     <>

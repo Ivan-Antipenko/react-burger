@@ -41,7 +41,7 @@ export function IngredientItem({ el, openModal }) {
           state: { background: location },
         }}
       >
-        <li ref={dragRef}>
+        <li ref={dragRef} onClick={openModal}>
           <div className={burgerStyles.menu_item}>
             {counter > 0 && <Counter count={counter} />}
             <img className="ml-4 mr-4" src={el.image} />

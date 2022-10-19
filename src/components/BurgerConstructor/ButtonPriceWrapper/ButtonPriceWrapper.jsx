@@ -19,6 +19,7 @@ export function ButtonPriceWrapper() {
   const ingridientsId = ingredients.map((el) => el._id);
   const orderId = [...ingridientsId, dataBun._id];
   const cash = useSelector((store) => store.burgerConstructor.cash);
+  const isOrderLoading = useSelector((store) => store.orderDetails.isLoading);
   return (
     <div
       className={`${ButtonPriceWrapperStyles.constructor_button_wrapper} mt-10`}
@@ -47,9 +48,9 @@ export function ButtonPriceWrapper() {
             type="primary"
             size="large"
             onClick={() => sendOrder(orderId)}
-            disabled={ingredients.length === 0}
+            disabled={ingredients.length === 0 || isOrderLoading}
           >
-            Оформить заказ
+            {!isOrderLoading ? <>Оформить заказ</> : <>Собираем бургер...</>}
           </Button>
         )}
       </div>
