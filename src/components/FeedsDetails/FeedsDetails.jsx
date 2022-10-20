@@ -11,22 +11,26 @@ export function FeedDetails() {
   const { id } = useParams();
   const order = orders?.find((el) => el._id === id);
   const ingrList = order.ingredients;
-
+  let summ = 0;
   let resArr = [];
-  let dublicates = [];
-
   for (let el of ingredients) {
     for (let id of ingrList) {
       if (el._id === id) {
         resArr.push(el);
+        summ += el.price;
       }
     }
   }
 
-  console.log(dublicates);
+  function isCount(el) {
+    let count = resArr.filter((item) => {
+      return item === el;
+    }).length;
+    return count;
+  }
 
   return (
-    <div className={detailsStyles.wrapper}>
+    <div className={`${detailsStyles.wrapper} pt-10 pb-10 pl-10 pr-10`}>
       <div>
         <p className={`${detailsStyles.number} text text_type_digits-default`}>
           #{order.number}
@@ -35,21 +39,36 @@ export function FeedDetails() {
           {order.name}
         </p>
         {order.status === "done" && (
-          <p className="text text_type_main-default mt-3">Выполнен</p>
+          <p
+            className={`${detailsStyles.ready} text text_type_main-default mt-3`}
+          >
+            Выполнен
+          </p>
         )}
         <p className="text text_type_main-medium mt-15">Состав:</p>
-        <div>
+        <div className={`${detailsStyles.ingr_box} mt-6 pr-6`}>
           <ul className={detailsStyles.ingr_wrapper}>
-            {resArr.map((el, index) => {
+            {[...new Set(resArr)].map((el, index) => {
               return (
-                <li className={detailsStyles.ingr_item} key={index}>
-                  <div className={detailsStyles.image_wrapper}>
-                    <img src={el.image_mobile} />
-                    <p className="text text_type_main-default">{el.name}</p>
+                <li className={`${detailsStyles.ingr_item} mt-6`} key={index}>
+                  <div className={detailsStyles.firs_ingr_wrapper}>
+                    <div className={detailsStyles.image_wrapper}>
+                      <div className={detailsStyles.image_wrapper_inside}>
+                        <img
+                          className={detailsStyles.image}
+                          src={el.image_mobile}
+                        />
+                      </div>
+                    </div>
+                    <p className="text text_type_main-default ml-4">
+                      {el.name}
+                    </p>
                   </div>
 
                   <div className={detailsStyles.price_wrapper}>
-                    <p>{el.price}</p>
+                    <p className="text text_type_digits-default mr-2">
+                      {isCount(el)} x {el.price}
+                    </p>
                     <CurrencyIcon />
                   </div>
                 </li>
@@ -57,9 +76,16 @@ export function FeedDetails() {
             })}
           </ul>
         </div>
-        <p>{order.createdAt}</p>
+        <div className={`${detailsStyles.summ_wrapper} mt-10`}>
+          <p className="text text_type_main-default text_color_inactive">
+            {order.createdAt}
+          </p>
+          <div className={detailsStyles.summ_wrapper_small}>
+            <p className="text text_type_digits-default mr-2">{summ}</p>
+            <CurrencyIcon />
+          </div>
+        </div>
       </div>
-      <div></div>
     </div>
   );
 }

@@ -6,16 +6,17 @@ import modalStyles from "./Modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/orderDetails";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const modalRoot = document.querySelector("#modal");
 
 export default function Modal(props) {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   function closeModals() {
     dispatch(closeIngredientModal());
     dispatch(closeOrderModal());
+    history.goBack();
   }
 
   const modalIngredientState = useSelector(
@@ -44,14 +45,12 @@ export default function Modal(props) {
   return createPortal(
     <div className={modalStyles.modal}>
       <div className={modalStyles.modal_wrapper}>
-        <Link to="/">
-          <button
-            className={modalStyles.modal_close_button}
-            onClick={closeModals}
-          >
-            <CloseIcon type="primary" />
-          </button>
-        </Link>
+        <button
+          className={modalStyles.modal_close_button}
+          onClick={closeModals}
+        >
+          <CloseIcon type="primary" />
+        </button>
         {props.children}
       </div>
       <ModalOverlay closeModal={closeModals} />

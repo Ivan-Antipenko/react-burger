@@ -1,8 +1,9 @@
-import { WS_CONNECTED_FAILED, WS_CONNECTED_SUCCESS, WS_GET_ORDERS, WS_CONNECTED_CLOSED } from "../actions/wsActions";
+import { WS_CONNECTION_FAILED, WS_CONNECTION_SUCCESS, WS_GET_ORDERS, WS_CONNECTION_CLOSED } from "../actions/wsActions";
 
 const initialState = {
     orders: [],
     isConnect: false,
+    isError: false,
     total: null,
     totalToday: null
 }
@@ -10,17 +11,18 @@ const initialState = {
 
 export function wsReducer(state = initialState, action) {
     switch(action.type) {
-        case WS_CONNECTED_SUCCESS: 
+        case WS_CONNECTION_SUCCESS: 
         return {
             ...state,
             isConnect: true
         }
-        case WS_CONNECTED_FAILED: 
+        case WS_CONNECTION_FAILED: 
         return {
             ...state,
-            isConnect: false
+            isConnect: false,
+            isError: true
         }
-        case WS_CONNECTED_CLOSED: 
+        case WS_CONNECTION_CLOSED: 
         return {
             ...state,
             isConnect: false

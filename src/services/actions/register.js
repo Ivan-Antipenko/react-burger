@@ -199,10 +199,7 @@ export function getUserInfo() {
                 data: res
             })
         })
-        .catch(() => {
-            dispatch({
-                type: GET_USER_FAILED,
-            })
+        .catch(() => { 
             const refToken = localStorage.getItem('refreshToken')
             refreshToken(refToken)
             .then((res) => {

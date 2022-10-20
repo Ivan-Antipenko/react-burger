@@ -21,6 +21,7 @@ import { Reset } from "../../pages/Reset/Reset";
 import { Feed } from "../Feed/Feed";
 import { wsConnectedStart } from "../../services/actions/wsActions";
 import { FeedDetails } from "../FeedsDetails/FeedsDetails";
+import { wsUserConnectedStart } from "../../services/actions/wsUserActions";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
