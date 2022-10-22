@@ -13,21 +13,24 @@ export function FeedsNumbers() {
       <div>
         <div className={feedNumbresStyles.status_container}>
           <div className={feedNumbresStyles.ready_wrapper}>
-            <p className="text text_type_main-medium">Готовы:</p>
+            <p className={` text text_type_main-medium`}>Готовы:</p>
             <ul className={feedNumbresStyles.ready_list}>
               {doneArray.map((el, index) => (
-                <li key={index}>
-                  <p
-                    className={`${feedNumbresStyles.ready_digits}text text_type_digits-default mt-2`}
-                  >
-                    {el.number}
-                  </p>
+                <li
+                  key={index}
+                  className={`${feedNumbresStyles.ready_digits} text text_type_digits-default mt-2`}
+                >
+                  <p>{el.number}</p>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <p className="text text_type_main-medium">В работе:</p>
+            <p
+              className={`${feedNumbresStyles.pending} text text_type_main-medium`}
+            >
+              В работе:
+            </p>
             <ul className={feedNumbresStyles.ready_list}>
               {pendingArray.map((el, index) => (
                 <li key={index}>

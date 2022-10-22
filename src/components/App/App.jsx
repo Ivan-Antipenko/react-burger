@@ -11,7 +11,7 @@ import { getIngredients } from "../../services/actions/ingredients";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Login } from "../../pages/Login/Login";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import { Register } from "../../pages/Register/Register";
 import { Profile } from "../../pages/Profile/Profile";
 import { Forgot } from "../../pages/Forgot/Forgot";
@@ -21,7 +21,10 @@ import { Reset } from "../../pages/Reset/Reset";
 import { Feed } from "../Feed/Feed";
 import { wsConnectedStart } from "../../services/actions/wsActions";
 import { FeedDetails } from "../FeedsDetails/FeedsDetails";
-import { wsUserConnectedStart } from "../../services/actions/wsUserActions";
+import {
+  wsUserConnectedStart,
+  wsUserConnectedClosed,
+} from "../../services/actions/wsUserActions";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -29,7 +32,7 @@ function App() {
   const background = location.state?.background;
 
   const isLoading = useSelector((store) => store.ingredients.isLoading);
-  const isLogin = useSelector((store) => store.ingredients.isLogin);
+  const isLogin = useSelector((store) => store.register.isLogin);
   const isError = useSelector((store) => store.ingredients.isError);
   const orderDetails = useSelector((store) => store.orderDetails.isModalOpen);
 
@@ -41,12 +44,17 @@ function App() {
 
   useEffect(() => {
     dispatch(updateToken());
+    if (!!isLogin) {
+      dispatch(wsUserConnectedStart());
+    } else {
+      dispatch(wsUserConnectedClosed());
+    }
   }, [isLogin]);
 
   return (
     <div className="page">
       <AppHeader />
-      <Switch location={background || location}>
+      <Switch>
         <Route path="/" exact>
           {isLoading && <h1 className={appStyles.message}>{`Загрузка...`}</h1>}
           {isError && <h1>{`Ой, кажется что-то пошло не так :c`}</h1>}

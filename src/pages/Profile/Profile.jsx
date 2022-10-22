@@ -4,12 +4,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import {
+  NavLink,
+  Redirect,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
+import { OrdersStory } from "../../components/OrdersStory/OrdersStory";
 import { logout, updateUser } from "../../services/actions/register";
 
 import profileStyles from "./Profile.module.css";
 
 export function Profile() {
+  const location = useLocation();
+  console.log(location);
   const dispatch = useDispatch();
   const password = localStorage.getItem("password");
   const isLogin = useSelector((store) => store.register.isLogin);
@@ -21,7 +30,7 @@ export function Profile() {
   });
 
   let [buttonSwitch, setSwitch] = useState(false);
-
+  const orders = useSelector((store) => store.wsUserReducer.orders);
   function logoutUser() {
     dispatch(logout());
   }
@@ -96,7 +105,7 @@ export function Profile() {
       </div>
 
       <Switch>
-        <Route path="/profile" exact>
+        <Route path="/profile">
           <div>
             <form
               className={`${profileStyles.inputs_wrapper} ml-15`}
@@ -142,7 +151,23 @@ export function Profile() {
             </form>
           </div>
         </Route>
+
+        <Route path="/profile/orders" exact>
+          <h1>SSSSSSSSSSSSSS</h1>
+        </Route>
       </Switch>
     </section>
   );
+}
+
+{
+  /* <div>
+<ul>
+  {orders.map((el) => (
+    <li>
+      <OrdersStory order={el} />
+    </li>
+  ))}
+</ul>
+</div> */
 }
