@@ -2,7 +2,8 @@ import { INGREDIENTS_MODAL_CLOSE, INGREDIENTS_MODAL_OPENED } from "../actions/in
 
 const initialStateModal = {
     isModalOpen: false,
-    overlayOpen: false
+    overlayOpen: false,
+    ingredient: null,
 }
 
 export function ingredientDetailReducer(state = initialStateModal, action) {

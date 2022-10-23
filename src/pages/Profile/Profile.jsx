@@ -19,6 +19,7 @@ import { logout, updateUser } from "../../services/actions/register";
 import profileStyles from "./Profile.module.css";
 
 export function Profile() {
+  const location = useLocation();
   const dispatch = useDispatch();
   const password = localStorage.getItem("password");
   const isLogin = useSelector((store) => store.register.isLogin);
@@ -154,7 +155,12 @@ export function Profile() {
             <ul className={profileStyles.orders_list}>
               {orders.map((el, index) => (
                 <li key={index}>
-                  <Link to={`/profile/orders/${el._id}`}>
+                  <Link
+                    to={{
+                      pathname: `/profile/orders/${el._id}`,
+                      state: { background: location },
+                    }}
+                  >
                     <OrdersStory order={el} />
                   </Link>
                 </li>

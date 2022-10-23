@@ -132,6 +132,7 @@ export function updateToken() {
         dispatch({
             type: UPDATE_TOKEN_REQUEST
         })
+        console.log('asdsadasdasd')
         const token = localStorage.getItem('refreshToken')
         refreshToken(token)
         .then((res) => {

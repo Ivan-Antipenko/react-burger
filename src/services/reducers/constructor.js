@@ -9,6 +9,7 @@ const initialConstructorState = {
 export function constructorReducer(state = initialConstructorState, action) {
     switch (action.type) {
         case ADD_INGREDIENT_BUN: {
+            
             return {
                 ...state,
                 bun: action.data,

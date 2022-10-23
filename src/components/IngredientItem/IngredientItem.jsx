@@ -11,7 +11,7 @@ export function IngredientItem({ el, openModal }) {
   let counter = 0;
   const constructor = useSelector((store) => store.burgerConstructor.items);
   const constructorBuns = useSelector((store) => store.burgerConstructor.bun);
-
+  const location = useLocation();
   constructor.map((item) => {
     if (item._id === el._id) {
       counter++;
@@ -36,6 +36,7 @@ export function IngredientItem({ el, openModal }) {
       <Link
         to={{
           pathname: `/ingredients/${el._id}`,
+          state: { background: location },
         }}
       >
         <li ref={dragRef} onClick={openModal}>
