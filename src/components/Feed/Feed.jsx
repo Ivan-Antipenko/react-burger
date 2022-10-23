@@ -6,7 +6,7 @@ import feedStyles from "./Feed.module.css";
 
 export function Feed() {
   const orders = useSelector((store) => store.wsReducer.orders);
-  const location = useLocation();
+
   return (
     <section className={feedStyles.feed_section}>
       <h2 className="text text_type_main-large mt-10">Лента заказов</h2>
@@ -18,7 +18,6 @@ export function Feed() {
                 <Link
                   to={{
                     pathname: `/feed/${order._id}`,
-                    state: { background: location },
                   }}
                 >
                   <FeedItem order={order} />

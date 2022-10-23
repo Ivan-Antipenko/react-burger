@@ -31,14 +31,11 @@ export function IngredientItem({ el, openModal }) {
     }),
   });
 
-  const location = useLocation();
-
   return (
     !isDrag && (
       <Link
         to={{
           pathname: `/ingredients/${el._id}`,
-          state: { background: location },
         }}
       >
         <li ref={dragRef} onClick={openModal}>

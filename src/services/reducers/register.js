@@ -158,7 +158,6 @@ export function authReducer(state = initialState, action) {
             }
         }
         case UPDATE_TOKEN_REQUEST: {
-
             return {
                 ...state,
                    isLoading: true,  

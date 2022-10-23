@@ -25,7 +25,7 @@ export function OrdersStory({ order }) {
   const hideItems = maxLength - 6;
 
   return (
-    <div className={`${ordersStyles.feed_item} mt-6 pt-6 pb-6 pl-6 pr-6 mr-2`}>
+    <div className={`${ordersStyles.feed_item} mb-6 pt-6 pb-6 pl-6 pr-6 mr-2`}>
       <div className={ordersStyles.content_wrapper}>
         <div className={ordersStyles.tittle_wrapper}>
           <p className="text text_type_digits-default">#{number}</p>

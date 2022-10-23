@@ -1,23 +1,27 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import detailsStyles from "./FeedsDetails.module.css";
+import detailsStyles from "./OrderInfo.module.css";
 
-export function FeedDetails() {
-  const orders = useSelector((store) => store.wsReducer.orders);
+export function OrderInfo() {
+  const orders = useSelector((store) => store.wsUserReducer.orders);
+  const isLogin = useSelector((store) => store.register.isLogin);
   const ingredients = useSelector(
     (store) => store.ingredients.burgerIngredients
   );
   const { id } = useParams();
+
   const order = orders?.find((el) => el._id === id);
-  const ingrList = order.ingredients;
+  const ingrList = order?.ingredients;
   let summ = 0;
   let resArr = [];
-  for (let el of ingredients) {
-    for (let id of ingrList) {
-      if (el._id === id) {
-        resArr.push(el);
-        summ += el.price;
+  if (ingrList) {
+    for (let el of ingredients) {
+      for (let id of ingrList) {
+        if (el._id === id) {
+          resArr.push(el);
+          summ += el.price;
+        }
       }
     }
   }
@@ -37,14 +41,14 @@ export function FeedDetails() {
             <p
               className={`${detailsStyles.number} text text_type_digits-default`}
             >
-              #{order.number}
+              #{order?.number}
             </p>
             <p
               className={`${detailsStyles.name}text text_type_main-medium mt-10`}
             >
-              {order.name}
+              {order?.name}
             </p>
-            {order.status === "done" && (
+            {order?.status === "done" && (
               <p
                 className={`${detailsStyles.ready} text text_type_main-default mt-3`}
               >
@@ -87,7 +91,7 @@ export function FeedDetails() {
             </div>
             <div className={`${detailsStyles.summ_wrapper} mt-10`}>
               <p className="text text_type_main-default text_color_inactive">
-                {order.createdAt}
+                {order?.createdAt}
               </p>
               <div className={detailsStyles.summ_wrapper_small}>
                 <p className="text text_type_digits-default mr-2">{summ}</p>

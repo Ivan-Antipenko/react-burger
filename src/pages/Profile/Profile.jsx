@@ -5,20 +5,20 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Link,
   NavLink,
   Redirect,
   Route,
   Switch,
   useLocation,
 } from "react-router-dom";
+import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
 import { OrdersStory } from "../../components/OrdersStory/OrdersStory";
 import { logout, updateUser } from "../../services/actions/register";
 
 import profileStyles from "./Profile.module.css";
 
 export function Profile() {
-  const location = useLocation();
-  console.log(location);
   const dispatch = useDispatch();
   const password = localStorage.getItem("password");
   const isLogin = useSelector((store) => store.register.isLogin);
@@ -30,7 +30,8 @@ export function Profile() {
   });
 
   let [buttonSwitch, setSwitch] = useState(false);
-  const orders = useSelector((store) => store.wsUserReducer.orders);
+  const orders = useSelector((store) => store.wsUserReducer.orders).reverse();
+
   function logoutUser() {
     dispatch(logout());
   }
@@ -64,10 +65,6 @@ export function Profile() {
     });
   }, [email, name, password]);
 
-  if (!isLogin) {
-    return <Redirect to="/login" />;
-  }
-
   return (
     <section className={profileStyles.content_box}>
       <div className={profileStyles.menu_wrapper}>
@@ -85,6 +82,7 @@ export function Profile() {
             <NavLink
               to="/profile/orders"
               className={`${profileStyles.menu_button} text text_type_main-medium`}
+              activeClassName={profileStyles.active_button}
             >
               История заказов
             </NavLink>
@@ -105,7 +103,7 @@ export function Profile() {
       </div>
 
       <Switch>
-        <Route path="/profile">
+        <Route path="/profile" exact>
           <div>
             <form
               className={`${profileStyles.inputs_wrapper} ml-15`}
@@ -151,9 +149,18 @@ export function Profile() {
             </form>
           </div>
         </Route>
-
         <Route path="/profile/orders" exact>
-          <h1>SSSSSSSSSSSSSS</h1>
+          <div className={`${profileStyles.orders_wrapper} ml-15 pr-2`}>
+            <ul className={profileStyles.orders_list}>
+              {orders.map((el, index) => (
+                <li key={index}>
+                  <Link to={`/profile/orders/${el._id}`}>
+                    <OrdersStory order={el} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Route>
       </Switch>
     </section>
@@ -161,13 +168,4 @@ export function Profile() {
 }
 
 {
-  /* <div>
-<ul>
-  {orders.map((el) => (
-    <li>
-      <OrdersStory order={el} />
-    </li>
-  ))}
-</ul>
-</div> */
 }

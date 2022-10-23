@@ -46,3 +46,25 @@
     display: flex;
     justify-content: space-between;
 }
+
+.orders_wrapper {
+    width: 844px;
+    height: calc(100vh - 270px);
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.orders_wrapper::-webkit-scrollbar {
+    background-color: #2F2F37;
+    width: 8px;
+}
+
+.orders_wrapper::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.orders_list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
