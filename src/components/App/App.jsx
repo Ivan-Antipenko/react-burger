@@ -16,7 +16,7 @@ import { Register } from "../../pages/Register/Register";
 import { Profile } from "../../pages/Profile/Profile";
 import { Forgot } from "../../pages/Forgot/Forgot";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import { getUserInfo } from "../../services/actions/register";
+import { getUserInfo, updateToken } from "../../services/actions/register";
 import { Reset } from "../../pages/Reset/Reset";
 import { Feed } from "../Feed/Feed";
 import { wsConnectedStart } from "../../services/actions/wsActions";
@@ -39,6 +39,7 @@ function App() {
     dispatch(getIngredients());
     dispatch(getUserInfo());
     dispatch(wsConnectedStart());
+    dispatch(updateToken());
   }, []);
 
   useEffect(() => {

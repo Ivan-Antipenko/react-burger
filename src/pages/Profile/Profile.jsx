@@ -36,7 +36,7 @@ export function Profile() {
   function logoutUser() {
     dispatch(logout());
   }
-
+  const token = localStorage.getItem("refreshToken");
   function submitUserInfo(evt) {
     evt.preventDefault();
     dispatch(updateUser(form.name, form.email, form.pass));
@@ -44,6 +44,7 @@ export function Profile() {
   }
 
   function inputUser(evt) {
+    console.log(token);
     setForm({ ...form, [evt.target.name]: evt.target.value });
     setSwitch((buttonSwitch = true));
   }

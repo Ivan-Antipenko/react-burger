@@ -6,6 +6,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import {
   deleteIngredient,
+  dropIngredient,
   DROP_INGREDIENT,
 } from "../../../services/actions/constructor";
 import { useRef } from "react";
@@ -34,11 +35,8 @@ export function ConstructorItem(props) {
       }
       const dragIndex = item.index;
       const hoverIndex = index;
-
-      dispatch({
-        type: DROP_INGREDIENT,
-        data: { dragIndex, hoverIndex },
-      });
+      const res = { dragIndex, hoverIndex };
+      dispatch(dropIngredient({ dragIndex, hoverIndex }));
     },
   });
 

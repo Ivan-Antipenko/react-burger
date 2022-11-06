@@ -1,13 +1,22 @@
-import {ORDER_SENDING_FAILED, ORDER_SENDING_REQUEST, ORDER_SENDING_SUCCESS, ORDER_MODAL_CLOSE} from '../actions/orderDetails'
+import {ORDER_SENDING_FAILED, ORDER_SENDING_REQUEST, ORDER_SENDING_SUCCESS, ORDER_MODAL_CLOSE, TOrderDetailsActions} from '../actions/orderDetails'
+import { TOrderNumber } from '../types'
 
-const initialState = {
+export interface IInitialState {
+    orderNumber: TOrderNumber,
+    isModalOpen: boolean,
+    isLoading: boolean,
+    isError: boolean
+}
+
+
+const initialState: IInitialState = {
     orderNumber: null,
     isModalOpen: false,
     isLoading: false,
     isError: false,
 }
 
-export function orderReducer(state = initialState, action) {
+export function orderReducer(state = initialState, action: TOrderDetailsActions): IInitialState {
    switch (action.type) {
     case ORDER_SENDING_REQUEST: {
         return {

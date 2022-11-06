@@ -1,9 +1,10 @@
+import { Middleware, MiddlewareAPI } from "redux";
 import { getCookie } from "../../utils/cookie";
-
-export function socketMiddleware(url, actions, isLogin = false) {
-  return (store) => {
-    let socket = null;
-
+import { IWsActions } from '../types';
+export function socketMiddleware(url: string, actions: IWsActions, isLogin: boolean = false): Middleware {
+  return (store: MiddlewareAPI) => {
+    let socket: WebSocket | null = null
+    
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
@@ -32,6 +33,7 @@ export function socketMiddleware(url, actions, isLogin = false) {
         socket.onmessage = (event) => {
           let { data } = event;
           data = JSON.parse(data);
+          console.log(data)
           dispatch({ type: onMessage, payload: data });
         };
         // функция, которая вызывается при закрытии соединения

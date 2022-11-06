@@ -1,7 +1,7 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import { addIngredients } from "../../../services/actions/constructor";
+import { addBun, addIngredient } from "../../../services/actions/constructor";
 import constructorItemsStyles from "../ConstructorItems/ConstructorItems.module.css";
 import { ConstructorList } from "../ConstructorList/ConstructorList";
 
@@ -11,7 +11,11 @@ export function ConstructorItems() {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
-      dispatch(addIngredients(item, dataBun));
+      if (item.type === "bun") {
+        dispatch(addBun(item));
+      } else if (item.type !== "bun" && dataBun) {
+        dispatch(addIngredient(item));
+      }
     },
   });
   const dataBun = useSelector((store) => store.burgerConstructor.bun);

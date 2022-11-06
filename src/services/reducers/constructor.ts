@@ -1,12 +1,20 @@
-import { ADD_INGREDIENT, ADD_INGREDIENT_BUN, DELETE_INGREDIENT, DROP_INGREDIENT, CLEAR_INGREDIENT_LIST } from "../actions/constructor";
+import { ADD_INGREDIENT, ADD_INGREDIENT_BUN, DELETE_INGREDIENT, DROP_INGREDIENT, CLEAR_INGREDIENT_LIST, TConstructorActions } from "../actions/constructor";
+import { IItem, TBun } from "../types";
 
-const initialConstructorState = {
+
+export interface TInitialConstructorState {
+    items: IItem[];
+    cash: number;
+    bun: TBun
+}
+
+const initialConstructorState: TInitialConstructorState = {
     items: [],
     cash: 0,
-    bun: false,
+    bun: false
 };
 
-export function constructorReducer(state = initialConstructorState, action) {
+export function constructorReducer(state = initialConstructorState, action: TConstructorActions): TInitialConstructorState {
     switch (action.type) {
         case ADD_INGREDIENT_BUN: {
             

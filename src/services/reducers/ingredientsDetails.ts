@@ -1,12 +1,20 @@
-import { INGREDIENTS_MODAL_CLOSE, INGREDIENTS_MODAL_OPENED } from "../actions/ingredientsDetails"
+import { INGREDIENTS_MODAL_CLOSE, INGREDIENTS_MODAL_OPENED, TIngredientsModalActions } from "../actions/ingredientsDetails"
+import { TIngrModal } from "../types"
 
-const initialStateModal = {
+
+export interface IInitialStateModal  {
+    isModalOpen: boolean,
+    overlayOpen: boolean,
+    ingredient: TIngrModal
+}
+
+const initialStateModal: IInitialStateModal = {
     isModalOpen: false,
     overlayOpen: false,
     ingredient: null,
 }
 
-export function ingredientDetailReducer(state = initialStateModal, action) {
+export function ingredientDetailReducer(state = initialStateModal, action: TIngredientsModalActions): IInitialStateModal {
 switch(action.type) {
     case INGREDIENTS_MODAL_OPENED: {
        return {

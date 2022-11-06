@@ -1,6 +1,6 @@
 import { getCookie } from "./cookie";
 
-export const checkRequest = (res) => {
+export function checkRequest(res: Response) {
   if (res.ok) {
     return res.json();
   }
@@ -12,7 +12,7 @@ export function getData() {
   return fetch(url).then(checkRequest);
 }
 
-export function getOrderNumber(ingredientsId) {
+export function getOrderNumber(ingredientsId: number) {
   const url = "https://norma.nomoreparties.space/api/orders";
   return fetch(url, {
     method: "POST",
@@ -26,7 +26,7 @@ export function getOrderNumber(ingredientsId) {
   }).then(checkRequest);
 }
 
-export function registerRequest(name, email, pass) {
+export function registerRequest(name: string, email: string, pass: string) {
   const url = "https://norma.nomoreparties.space/api/auth/register";
   return fetch(url, {
     method: "POST",
@@ -41,7 +41,7 @@ export function registerRequest(name, email, pass) {
   }).then(checkRequest);
 }
 
-export function loginRequest(email, pass) {
+export function loginRequest(email: string, pass: string) {
   const url = "https://norma.nomoreparties.space/api/auth/login";
   return fetch(url, {
     method: "POST",
@@ -55,7 +55,7 @@ export function loginRequest(email, pass) {
   }).then(checkRequest);
 }
 
-export function refreshToken(token) {
+export function refreshToken(token: string) {
   const url = "https://norma.nomoreparties.space/api/auth/token";
   return fetch(url, {
     method: "POST",
@@ -82,7 +82,7 @@ export function logoutRequest() {
   }).then(checkRequest);
 }
 
-export function recoveryPass(email) {
+export function recoveryPass(email: string) {
   const url = "https://norma.nomoreparties.space/api/password-reset";
   return fetch(url, {
     method: "POST",
@@ -95,7 +95,7 @@ export function recoveryPass(email) {
   }).then(checkRequest);
 }
 
-export function resetPassRequest(pass, code) {
+export function resetPassRequest(pass: string | number, code: string | number) {
   const url = "https://norma.nomoreparties.space/api/password-reset/reset";
   return fetch(url, {
     method: "POST",
@@ -109,7 +109,7 @@ export function resetPassRequest(pass, code) {
   }).then(checkRequest);
 }
 
-export function getUser(token) {
+export function getUser(token: string) {
   const url = "https://norma.nomoreparties.space/api/auth/user";
   return fetch(url, {
     method: "GET",
@@ -120,7 +120,7 @@ export function getUser(token) {
   }).then(checkRequest);
 }
 
-export function updateUserInfo(name, email, pass, token) {
+export function updateUserInfo(name: string, email: string, pass: string | number, token: string) {
   const url = "https://norma.nomoreparties.space/api/auth/user";
   return fetch(url, {
     method: "PATCH",
@@ -136,7 +136,7 @@ export function updateUserInfo(name, email, pass, token) {
   }).then(checkRequest);
 }
 
-export function getFeeds(name, email, pass, token) {
+export function getFeeds(name: string, email: string, pass: string | number, token: string) {
   const url = "https://norma.nomoreparties.space/api/auth/user";
   return fetch(url, {
     method: "PATCH",

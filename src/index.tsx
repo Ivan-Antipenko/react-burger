@@ -30,10 +30,11 @@ import {
 } from "./services/actions/wsUserActions";
 
 const composeEnhancers =
-  (window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+  (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const wsUrl = "wss://norma.nomoreparties.space/orders/all";
-const wsUrlUser = "wss://norma.nomoreparties.space/orders";
+
+const wsUrl: string = "wss://norma.nomoreparties.space/orders/all";
+const wsUrlUser: string = "wss://norma.nomoreparties.space/orders";
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,
@@ -54,13 +55,13 @@ const wsUserActions = {
 };
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk),
-  applyMiddleware(socketMiddleware(wsUrl, wsActions, false)),
-  applyMiddleware(socketMiddleware(wsUrlUser, wsUserActions, true))
+  applyMiddleware(thunk,
+  socketMiddleware(wsUrl, wsActions, false),
+  socketMiddleware(wsUrlUser, wsUserActions, true))
 );
-const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, enhancer);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <Provider store={store}>
     <Router>
@@ -69,7 +70,4 @@ root.render(
   </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

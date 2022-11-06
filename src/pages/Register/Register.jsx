@@ -1,8 +1,6 @@
 import {
   Input,
   Button,
-  EmailInput,
-  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -19,7 +17,6 @@ export function Register() {
   const name = useSelector((store) => store.register.form.name);
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
-
   function inputUser(evt) {
     dispatch(setFormValue(evt.target.name, evt.target.value));
   }

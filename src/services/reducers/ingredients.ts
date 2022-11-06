@@ -1,11 +1,19 @@
 import { 
     INGREDIENTS_UPLOAD_REQUEST, 
     INGREDIENTS_UPLOAD_SUCCESS,
-    INGREDIENTS_UPLOAD_FAILED 
+    INGREDIENTS_UPLOAD_FAILED, 
+    TIngredientsActions
 } from "../actions/ingredients";
+import { IItem } from "../types";
 
 
-const initialIngredientsState = {
+export interface IInitialIngredientsState {
+    burgerIngredients: IItem[],
+    isLoading: boolean,
+    isError: boolean
+}
+
+const initialIngredientsState: IInitialIngredientsState = {
     burgerIngredients: [],
     isLoading: false,
     isError: false,
@@ -13,7 +21,7 @@ const initialIngredientsState = {
 
 
 
-export function ingredientsReducer(state = initialIngredientsState, action) {
+export function ingredientsReducer(state = initialIngredientsState, action: TIngredientsActions): IInitialIngredientsState {
     switch (action.type) {
         case INGREDIENTS_UPLOAD_REQUEST: {
             return {

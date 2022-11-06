@@ -12,8 +12,6 @@ import {REGISTER_SENDING_REQUEST,
         UPDATE_TOKEN_REQUEST,
         UPDATE_TOKEN_SUCCESS,
         UPDATE_TOKEN_FAILED,
-        CHECK_TOKEN_VALID,
-        CHECK_TOKEN_INVALID,
         LOGOUT_SENDING_REQUEST,
         LOGOUT_SENDING_SUCCESS,
         RECOVERY_PASS_REQUEST,
@@ -27,11 +25,32 @@ import {REGISTER_SENDING_REQUEST,
         CHANGE_USER_FAILED,
         RESET_PASS_REQUEST,
         RESET_PASS_SUCCESS,
-        RESET_PASS_FAILED
+        RESET_PASS_FAILED,
+        TRegisterActions
        } from "../actions/register";
 
-const initialState = {
 
+export interface IInitialState {
+    isLoading: boolean,
+    isError: boolean,
+    isLogin: boolean,
+    isRecoveryProcess: boolean,
+    isRecoveryProcessComplete: boolean,
+    registrationComplete: boolean,
+    user: {
+        email: string,
+        pass: string,
+        name: string
+    },
+
+    form: {
+        email: string,
+        pass: string,
+        name: string
+    }
+}
+
+const initialState: IInitialState = {
     isLoading: false,
     isError: false,
     isLogin: false,
@@ -52,7 +71,7 @@ const initialState = {
 
 }
 
-export function authReducer(state = initialState, action) {
+export function authReducer(state = initialState, action: TRegisterActions): IInitialState {
     switch (action.type) {
         case REGISTER_SENDING_REQUEST: {
             return {
@@ -118,12 +137,10 @@ export function authReducer(state = initialState, action) {
                     email: '',
                     pass: '',
                 },
-
                 user: {
                     ...state.user,
                     email: action.data.user.email,
                     name: action.data.user.name,
-                    pass: localStorage.getItem('password')
                 },
             }
         }
@@ -145,7 +162,7 @@ export function authReducer(state = initialState, action) {
             return {
                 ...state,
                 isLogin: false,
-                regisrationComplete: false,
+                registrationComplete: false,
             }
         }
         case LOGIN_FORM_CHANGE_VALUE: {
@@ -178,18 +195,6 @@ export function authReducer(state = initialState, action) {
             return {
                 ...state,
                    isLoading: false,
-                   isLogin: false
-            }
-        }
-        case CHECK_TOKEN_VALID: {
-            return {
-                ...state,
-                   isLogin: true
-            }
-        }
-        case CHECK_TOKEN_INVALID: {
-            return {
-                ...state,
                    isLogin: false
             }
         }
@@ -249,7 +254,6 @@ export function authReducer(state = initialState, action) {
                     ...state.user,
                     email: action.data.user.email,
                     name: action.data.user.name,
-                    pass: localStorage.getItem('password')
                    },
                    isLoading: false,
                    isLogin: true,
@@ -275,7 +279,6 @@ export function authReducer(state = initialState, action) {
                     ...state.user,
                     email: action.data.email,
                     name: action.data.name,
-                    pass: localStorage.getItem('password')
                    },
             }
         }
