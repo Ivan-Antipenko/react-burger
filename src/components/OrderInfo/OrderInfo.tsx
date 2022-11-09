@@ -1,19 +1,20 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { IItem, useSelector } from "../../services/types";
 import { useParams } from "react-router-dom";
-import detailsStyles from "./FeedDetails.module.css";
+import detailsStyles from "./OrderInfo.module.css";
 
-export function FeedDetails() {
-  const orders = useSelector((store) => store.wsReducer.orders);
+export function OrderInfo() {
+  const orders = useSelector((store) => store.wsUserReducer.orders);
   const ingredients = useSelector(
     (store) => store.ingredients.burgerIngredients
   );
+  const { id } = useParams<{id: string}>();
 
-  const { id } = useParams();
+
   const order = orders?.find((el) => el._id === id);
   const ingrList = order?.ingredients;
   let summ = 0;
-  let resArr = [];
+  let resArr: IItem[] = [];
   if (ingrList) {
     for (let el of ingredients) {
       for (let id of ingrList) {
@@ -25,16 +26,16 @@ export function FeedDetails() {
     }
   }
 
-  function isCount(el) {
+  function isCount(el: IItem) {
     let count = resArr.filter((item) => {
       return item === el;
     }).length;
     return count;
   }
-  const showContent = resArr && order && ingredients;
+
   return (
     <>
-      {showContent && (
+      {resArr && (
         <div className={detailsStyles.background}>
           <div className={`${detailsStyles.wrapper} pt-10 pb-10 pl-10 pr-10`}>
             <div>
@@ -82,7 +83,7 @@ export function FeedDetails() {
                           <p className="text text_type_digits-default mr-2">
                             {isCount(el)} x {el.price}
                           </p>
-                          <CurrencyIcon />
+                          <CurrencyIcon type='primary' />
                         </div>
                       </li>
                     );
@@ -95,7 +96,7 @@ export function FeedDetails() {
                 </p>
                 <div className={detailsStyles.summ_wrapper_small}>
                   <p className="text text_type_digits-default mr-2">{summ}</p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type="primary" />
                 </div>
               </div>
             </div>

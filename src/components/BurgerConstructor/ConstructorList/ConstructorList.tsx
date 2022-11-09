@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../services/types";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 import constructorListStyles from "./ConstructorList.module.css";
 

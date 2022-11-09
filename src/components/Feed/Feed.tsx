@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types";
 import { Link, useLocation } from "react-router-dom";
 import { FeedItem } from "../FeedItem/FeedItem";
 import { FeedsNumbers } from "../FeedsNumbers/FeedsNumbers";

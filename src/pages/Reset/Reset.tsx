@@ -1,29 +1,28 @@
 import {
   Button,
   Input,
-  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState} from "react";
 import { Link, Redirect } from "react-router-dom";
 import { resetPass } from "../../services/actions/register";
-
+import { useSelector, useDispatch } from "../../services/types";
 import resetStyles from "./Reset.module.css";
 
 export function Reset() {
   const dispatch = useDispatch();
 
   const [pass, setPass] = useState("");
-  function onChangePass(evt) {
+  function onChangePass(evt: React.ChangeEvent<HTMLInputElement>) {
+    console.log(evt)
     setPass(evt.target.value);
   }
 
   const [code, setCode] = useState("");
-  function onChangeCode(evt) {
+  function onChangeCode(evt: React.ChangeEvent<HTMLInputElement>) {
     setCode(evt.target.value);
   }
 
-  function submitReset(evt) {
+  function submitReset(evt: React.FormEvent) {
     evt.preventDefault();
     dispatch(resetPass(pass, code));
   }
@@ -71,7 +70,7 @@ export function Reset() {
           />
         </div>
         <div className="mt-6">
-          <Button disabled={!pass || !code}>Сохранить</Button>
+          <Button htmlType="submit" disabled={!pass || !code}>Сохранить</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вспомнили пароль?{" "}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerStyles from "./BurgerIngredients.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types";
 import { useInView } from "react-intersection-observer";
 import { IngredientsList } from "./IngredientList/IngredientsList";
 
@@ -18,8 +18,8 @@ function BurgerIngredients() {
     threshold: 1,
   });
 
-  const scrollTabClick = (e) => {
-    const section = document.getElementById(e);
+  const scrollTabClick = (e: string) => {
+    const section = document.getElementById(e)!;
     section.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -85,7 +85,7 @@ function BurgerIngredients() {
         >
           Булки
         </h2>
-        <IngredientsList data={bunMenu} type="bun" />
+        <IngredientsList data={bunMenu} />
         <h2
           className="text text_type_main-medium mt-10"
           ref={sauceRef}
@@ -93,7 +93,7 @@ function BurgerIngredients() {
         >
           Соусы
         </h2>
-        <IngredientsList data={sauceMenu} type="sauce" />
+        <IngredientsList data={sauceMenu} />
         <h2
           className="text text_type_main-medium mt-10"
           ref={mainRef}
@@ -101,7 +101,7 @@ function BurgerIngredients() {
         >
           Начинки
         </h2>
-        <IngredientsList data={mainMenu} type="main" />
+        <IngredientsList data={mainMenu} />
       </div>
     </section>
   );

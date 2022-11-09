@@ -1,17 +1,32 @@
 import { ADD_INGREDIENT, ADD_INGREDIENT_BUN, DELETE_INGREDIENT, DROP_INGREDIENT, CLEAR_INGREDIENT_LIST, TConstructorActions } from "../actions/constructor";
-import { IItem, TBun } from "../types";
+import { IItem } from "../types";
 
 
 export interface TInitialConstructorState {
     items: IItem[];
     cash: number;
-    bun: TBun
+    bun: IItem
 }
 
 const initialConstructorState: TInitialConstructorState = {
     items: [],
     cash: 0,
-    bun: false
+    bun: {
+        type: "bun",
+        name: '',
+        price: 0,
+        _id: '',
+        __v: 0,
+        id: '',
+        calories: 0,
+        carbohydrates: 0,
+        fat: 0,
+        image: '',
+        image_large: '',
+        image_mobile: '',
+        proteins: 0,
+        uniCode: '',
+    }
 };
 
 export function constructorReducer(state = initialConstructorState, action: TConstructorActions): TInitialConstructorState {

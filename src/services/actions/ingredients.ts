@@ -1,5 +1,5 @@
-import { Dispatch } from "redux"
 import { getData } from "../../utils/api"
+import { AppDispatch, AppThunk } from "../types"
 
 export const INGREDIENTS_UPLOAD_REQUEST: 'INGREDIENTS_UPLOAD_REQUEST'  = 'INGREDIENTS_UPLOAD_REQUEST'
 export const INGREDIENTS_UPLOAD_SUCCESS: 'INGREDIENTS_UPLOAD_SUCCESS' = 'INGREDIENTS_UPLOAD_SUCCESS'
@@ -22,8 +22,8 @@ export interface IIngredientUploadFailed {
 
 
 
-export function getIngredients() {
-    return function (dispatch: Dispatch) {
+export const getIngredients: AppThunk = () => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: INGREDIENTS_UPLOAD_REQUEST
         })

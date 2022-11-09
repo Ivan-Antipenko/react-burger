@@ -1,7 +1,8 @@
 import { Redirect, Route } from "react-router-dom";
+import { IComponentProps } from "../../services/types";
 import { getCookie } from "../../utils/cookie";
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute = ({ children, ...rest }: IComponentProps) => {
   const token = getCookie("accessToken");
   return (
     <Route

@@ -1,8 +1,8 @@
 import { WS_CONNECTION_FAILED, WS_CONNECTION_SUCCESS, WS_GET_ORDERS, WS_CONNECTION_CLOSED, TWsActions } from "../actions/wsActions";
-import { IItem, TOrderNumber } from "../types";
+import { IWsOrder, TOrderNumber } from "../types";
 
 export interface IInitialState {
-    orders: IItem[],
+    orders: IWsOrder[],
     isConnect: boolean,
     isError: boolean,
     total: TOrderNumber,
@@ -38,14 +38,12 @@ export function wsReducer(state = initialState, action: TWsActions): IInitialSta
             isConnect: false
         }
         case WS_GET_ORDERS:
-            console.log(action.data)
-           return state
-		// return {
-		// 	...state,
-		// 	orders: action.data.orders,
-		// 	total: action.data.total,
-		// 	totalToday: action.data.totalToday,
-		// };
+		return {
+			...state,
+			orders: action.payload.orders,
+			total: action.payload.total,
+			totalToday: action.payload.totalToday,
+		};
         default: 
         return state
         

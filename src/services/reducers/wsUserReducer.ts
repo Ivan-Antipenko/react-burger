@@ -1,13 +1,22 @@
-import { WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_FAILED, WS_USER_CONNECTION_START, WS_USER_CONNECTION_SUCCESS, WS_USER_GET_ORDERS } from "../actions/wsUserActions"
+import { Interface } from "readline"
+import { TWsUserActions, WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_FAILED, WS_USER_CONNECTION_START, WS_USER_CONNECTION_SUCCESS, WS_USER_GET_ORDERS } from "../actions/wsUserActions"
+import { IWsOrder } from "../types"
 
-const initialState = {
+export interface IInitialState {
+    orders: IWsOrder[],
+    isConnect: boolean,
+    isError: boolean
+}
+
+
+const initialState: IInitialState = {
     orders: [],
     isConnect: false,
     isError: false
 }
 
 
-export function wsUserReducer(state = initialState, action) {
+export function wsUserReducer(state = initialState, action: TWsUserActions): IInitialState {
    switch (action.type) {
     case WS_USER_CONNECTION_SUCCESS: {
         return {

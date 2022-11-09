@@ -1,24 +1,26 @@
 import { createPortal } from "react-dom";
 import { ModalOverlay } from "../ModalOverlay/ModalOverlay";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./Modal.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  IComponentProps,
+  useDispatch,
+  useSelector,
+} from "../../services/types";
 import { closeIngredientModal } from "../../services/actions/ingredientsDetails";
 import { closeOrderModal } from "../../services/actions/orderDetails";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const modalRoot = document.querySelector("#modal");
 
-export default function Modal(props) {
+export default function Modal(props: IComponentProps) {
   const dispatch = useDispatch();
   const history = useHistory();
-  function closeModals() {
+  const closeModals = () => {
     dispatch(closeIngredientModal());
     dispatch(closeOrderModal());
     history.goBack();
-  }
-
+  };
   const modalIngredientState = useSelector(
     (store) => store.ingredientDetails.isModalOpen
   );
@@ -28,7 +30,7 @@ export default function Modal(props) {
   );
 
   useEffect(() => {
-    function handleEscKeydown(evt) {
+    function handleEscKeydown(evt: KeyboardEvent) {
       if (evt.key === "Escape") {
         closeModals();
       }
@@ -53,8 +55,8 @@ export default function Modal(props) {
         </button>
         {props.children}
       </div>
-      <ModalOverlay closeModal={closeModals} />
+      <ModalOverlay />
     </div>,
-    modalRoot
+    document.getElementById('modal')!
   );
 }

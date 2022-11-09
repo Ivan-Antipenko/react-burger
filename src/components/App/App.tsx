@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types";
 import AppHeader from "../AppHeader/AppHeader";
 import appStyles from "../App/App.module.css";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -26,10 +26,11 @@ import {
   wsUserConnectedClosed,
 } from "../../services/actions/wsUserActions";
 import { OrderInfo } from "../OrderInfo/OrderInfo";
+
 function App() {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const background = location.state?.background;
+  const location = useLocation<{ background?: null | undefined }>();
+  const background = location.state?.background
 
   const isLoading = useSelector((store) => store.ingredients.isLoading);
   const isLogin = useSelector((store) => store.register.isLogin);

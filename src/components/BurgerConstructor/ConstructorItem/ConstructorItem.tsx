@@ -3,16 +3,16 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { IConstructorItem, useDispatch } from "../../../services/types";
 import {
   deleteIngredient,
   dropIngredient,
-  DROP_INGREDIENT,
 } from "../../../services/actions/constructor";
 import { useRef } from "react";
 import counstructorItemStyles from "./ConstructorItem.module.css";
 
-export function ConstructorItem(props) {
+export function ConstructorItem(props: IConstructorItem) {
+
   const dispatch = useDispatch();
   const ref = useRef(null);
   const index = props.index;
@@ -29,7 +29,7 @@ export function ConstructorItem(props) {
 
   const [, drop] = useDrop({
     accept: "element",
-    drop(item) {
+    drop(item: any) {
       if (!ref.current) {
         return;
       }
@@ -48,7 +48,7 @@ export function ConstructorItem(props) {
       ref={ref}
       style={{ opacity }}
     >
-      <DragIcon />
+      <DragIcon type="primary" />
       <ConstructorElement
         text={props.el.name}
         price={props.el.price}

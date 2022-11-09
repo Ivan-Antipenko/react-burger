@@ -1,6 +1,6 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { IItemBun, useDispatch, useSelector } from "../../../services/types";
 import { addBun, addIngredient } from "../../../services/actions/constructor";
 import constructorItemsStyles from "../ConstructorItems/ConstructorItems.module.css";
 import { ConstructorList } from "../ConstructorList/ConstructorList";
@@ -10,7 +10,7 @@ export function ConstructorItems() {
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item: IItemBun) {
       if (item.type === "bun") {
         dispatch(addBun(item));
       } else if (item.type !== "bun" && dataBun) {
@@ -26,7 +26,7 @@ export function ConstructorItems() {
       className={`${constructorItemsStyles.constructor_wrapper} mt-25 pr-4`}
       ref={dropTarget}
     >
-      {!dataBun ? (
+      {dataBun.price === 0 ? (
         <div className={constructorItemsStyles.constructor_list_empty}>
           <p className={constructorItemsStyles.constructor_list_empty_title}>
             Перетащите нужную булочку сюда

@@ -2,7 +2,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types";
 import { Link, Redirect } from "react-router-dom";
 import { registration, setFormValue } from "../../services/actions/register";
 import registerStyles from "./Register.module.css";
@@ -17,11 +17,11 @@ export function Register() {
   const name = useSelector((store) => store.register.form.name);
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
-  function inputUser(evt) {
+  function inputUser(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch(setFormValue(evt.target.name, evt.target.value));
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: React.FormEvent) {
     evt.preventDefault();
     dispatch(registration(name, email, pass));
   }
@@ -66,7 +66,7 @@ export function Register() {
           />
         </div>
         <div className="mt-6">
-          <Button disabled={!name || !email || !pass}>
+          <Button htmlType="submit" disabled={!name || !email || !pass}>
             Зарегистрироваться
           </Button>
         </div>

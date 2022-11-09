@@ -1,13 +1,10 @@
 import {
   Button,
-  PasswordInput,
-  EmailInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types";
 import { Link, Redirect } from "react-router-dom";
 import { login, setLoginValue } from "../../services/actions/register";
-import { getCookie } from "../../utils/cookie";
 
 import loginStyles from "./Login.module.css";
 
@@ -18,11 +15,11 @@ export function Login() {
   const email = useSelector((store) => store.register.form.email);
   const pass = useSelector((store) => store.register.form.pass);
 
-  function inputUser(evt) {
+  function inputUser(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch(setLoginValue(evt.target.name, evt.target.value));
   }
 
-  function submitLogin(evt) {
+  function submitLogin(evt: React.FormEvent) {
     evt.preventDefault();
     dispatch(login(email, pass));
   }
@@ -54,7 +51,7 @@ export function Login() {
           />
         </div>
         <div className="mt-6">
-          <Button disabled={!pass || !email}>Войти</Button>
+          <Button htmlType="submit" disabled={!pass || !email}>Войти</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вы - новый пользователь?

@@ -31,10 +31,9 @@ export function socketMiddleware(url: string, actions: IWsActions, isLogin: bool
         };
         // функция, которая вызывается при получении события от сервера
         socket.onmessage = (event) => {
-          let { data } = event;
-          data = JSON.parse(data);
-          console.log(data)
-          dispatch({ type: onMessage, payload: data });
+          const { data } = event;
+          const res = JSON.parse(data);
+          dispatch({ type: onMessage, payload: res });
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = (event) => {

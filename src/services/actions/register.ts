@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 import { getUser, loginRequest, logoutRequest, recoveryPass, refreshToken, registerRequest, resetPassRequest, updateUserInfo } from "../../utils/api"
 import { deleteCookie, getCookie} from "../../utils/cookie"
-import { IChangeUserInfo, IUpdateToken, IUserInfo} from "../types"
+import { AppDispatch, AppThunk, IChangeUserInfo, IUpdateToken, IUserInfo} from "../types"
 export const REGISTER_FORM_CHANGE_VALUE: 'REGISTER_FORM_CHANGE_VALUE' = 'REGISTER_FORM_CHANGE_VALUE'
 export const PROFILE_FORM_CHANGE_VALUE: 'REGISTER_FORM_CHANGE_VALUE' = 'REGISTER_FORM_CHANGE_VALUE'
 export const LOGIN_FORM_CHANGE_VALUE: 'LOGIN_FORM_SET_VALUE' = 'LOGIN_FORM_SET_VALUE'
@@ -183,38 +183,26 @@ export interface IChangeUserFailed {
 }
 
 
-export function setFormValue(field: string, value: string | number) {
-    return function(dispatch: Dispatch) {
-        dispatch({
-            type: REGISTER_FORM_CHANGE_VALUE,
-            field,
-            value
-        })
-    }
-}
+export const setFormValue = (field: string, value: string): IRegisterFormChangeValue => ({
+    type: REGISTER_FORM_CHANGE_VALUE,
+    field,
+    value
+})
 
-export function setLoginValue(field: string, value: string | number) {
-    return function(dispatch: Dispatch) {
-        dispatch({
-            type: LOGIN_FORM_CHANGE_VALUE,
-            field,
-            value
-        })
-    }
-}
+export const setLoginValue = (field: string, value: string): ILoginFormChangeValue => ({
+    type: LOGIN_FORM_CHANGE_VALUE,
+    field,
+    value
+})
 
-export function setProfileValue(field: string, value: string | number) {
-    return function(dispatch: Dispatch) {
-        dispatch({
-            type: PROFILE_FORM_CHANGE_VALUE,
-            field,
-            value
-        })
-    }
-}
+export const setProfileValue = (field: string, value: string): IProfileFormChangeValue => ({
+    type: PROFILE_FORM_CHANGE_VALUE,
+    field,
+    value
+})
 
-export function registration(name: string, email: string, pass: string) {
-    return function(dispatch: Dispatch) {
+export const registration: AppThunk = (name: string, email: string, pass: string) => {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: REGISTER_SENDING_REQUEST,
         })
@@ -232,14 +220,13 @@ export function registration(name: string, email: string, pass: string) {
     }
 }
 
-export function login(email: string, pass: string) {
-    return function(dispatch: Dispatch) {
+export const login: AppThunk = (email: string, pass: string) => {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: LOGIN_SENDING_REQUEST
         })
         loginRequest(email, pass)
         .then((res) => {
-            console.log(res)
             dispatch({
                 type: LOGIN_SENDING_SUCCESS,
                 data: res,
@@ -253,8 +240,8 @@ export function login(email: string, pass: string) {
     }
 }
 
-export function logout() {
-    return function(dispatch: Dispatch) {
+export const logout: AppThunk = () => {
+    return function(dispatch: AppDispatch) {
         dispatch({
             type: LOGOUT_SENDING_REQUEST
         })
@@ -277,8 +264,8 @@ export function logout() {
 }
 
 
-export function updateToken() {
-    return function (dispatch: Dispatch) {
+export const updateToken: AppThunk = () => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: UPDATE_TOKEN_REQUEST
         })
@@ -300,8 +287,8 @@ export function updateToken() {
         }      
 }
 
-export function updatePass(email: string) {
-    return function (dispatch: Dispatch) {
+export const updatePass: AppThunk = (email: string) => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: RECOVERY_PASS_REQUEST
         })
@@ -319,8 +306,8 @@ export function updatePass(email: string) {
     }
 }
 
-export function resetPass(pass: string, code: string) {
-    return function (dispatch: Dispatch) {
+export const resetPass: AppThunk = (pass: string, code: string) => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: RESET_PASS_REQUEST
         })
@@ -338,8 +325,8 @@ export function resetPass(pass: string, code: string) {
     }
 }
 
-export function getUserInfo() {
-    return function (dispatch: Dispatch) {
+export const getUserInfo: AppThunk = () => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -375,8 +362,8 @@ export function getUserInfo() {
     }
 }
 
-export function updateUser(name: string, email: string, pass: string) {
-    return function (dispatch: Dispatch) {
+export const updateUser: AppThunk = (name: string, email: string, pass: string) => {
+    return function (dispatch: AppDispatch) {
       dispatch({
         type: CHANGE_USER_REQUEST,
       });

@@ -1,10 +1,9 @@
 import {
   Button,
-  EmailInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types";
 import { Link, Redirect } from "react-router-dom";
 import { updatePass } from "../../services/actions/register";
 
@@ -14,11 +13,11 @@ export function Forgot() {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
-  function onChange(evt) {
+  function onChange(evt: React.ChangeEvent<HTMLInputElement>) {
     setEmail(evt.target.value);
   }
 
-  function submitForgot(evt) {
+  function submitForgot(evt: React.FormEvent) {
     evt.preventDefault();
     dispatch(updatePass(email));
   }
@@ -47,7 +46,7 @@ export function Forgot() {
           />
         </div>
         <div className="mt-6">
-          <Button disabled={!email}>Восстановить</Button>
+          <Button htmlType="submit" disabled={!email}>Восстановить</Button>
         </div>
         <p className="text text_type_main-default text_color_inactive mt-20">
           Вспомнили пароль?{" "}

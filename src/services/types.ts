@@ -11,11 +11,11 @@ import { TIngredientsActions } from './actions/ingredients';
 import { TOrderDetailsActions } from './actions/orderDetails';
 import { TRegisterActions } from './actions/register';
 import { TWsActions } from './actions/wsActions';
-
-export type RootState = ReturnType<typeof store.getState>;
+import { rootReducer } from './root-reducer';
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
 export const useDispatch = () => dispatchHook<AppDispatch & AppThunk>();
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
@@ -45,6 +45,10 @@ export interface IItem {
     uniCode? : number | string
 };
 
+export interface IItemBun extends IItem {
+    type: "bun";
+};
+
 export interface IWsOrder {
     createdAt: string;
     ingredients: string[];
@@ -62,7 +66,6 @@ export interface IWsOrders {
     totalToday: number,
 }
 
-export type TBun = Boolean | Object;
 export type TIngrModal = null | Object;
 export type TOrderNumber = null | number;
 
@@ -101,5 +104,34 @@ export interface IWsActions {
     onMessage: string;
 }
 
+export interface IComponentProps {
+    children: React.ReactNode;
+    path?: string
+}
 
+export interface IOrderProps {
+    order: IWsOrder
+}
 
+export interface IIngredientProps {
+    el: IItem;
+    onClick: () => void
+}
+
+export interface IIngrProps {
+   text: string,
+   value: number
+}
+
+export interface IIngrListProps {
+    data: IItem[]
+ }
+
+ export interface IConstructorItem {
+    el: IItem;
+    index: number
+ }
+
+ export interface IBackground {
+    background: string
+ }

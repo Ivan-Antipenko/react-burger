@@ -1,12 +1,12 @@
-import { useDispatch } from "react-redux";
+import { IIngrListProps, IItem, useDispatch } from "../../../services/types";
 import { openModal } from "../../../services/actions/ingredientsDetails";
 import { IngredientItem } from "../../IngredientItem/IngredientItem";
 import ingredientsListStyles from "../IngredientList/IngredientsList.module.css";
 
-export function IngredientsList({ data }) {
+export function IngredientsList({ data }: IIngrListProps) {
   const dispatch = useDispatch();
 
-  function openDetailsModal(el) {
+  function openDetailsModal(el: IItem) {
     dispatch(openModal(el));
   }
 
@@ -15,8 +15,7 @@ export function IngredientsList({ data }) {
       {data.map((el) => (
         <IngredientItem
           el={el}
-          openModal={openDetailsModal}
-          data={data}
+          onClick={() => openDetailsModal(el)}
           key={el._id}
         />
       ))}

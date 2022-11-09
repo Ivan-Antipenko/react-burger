@@ -3,16 +3,14 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types";
 import {
   Link,
   NavLink,
-  Redirect,
   Route,
   Switch,
   useLocation,
 } from "react-router-dom";
-import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
 import { OrdersStory } from "../../components/OrdersStory/OrdersStory";
 import { logout, updateUser } from "../../services/actions/register";
 
@@ -33,38 +31,41 @@ export function Profile() {
   let [buttonSwitch, setSwitch] = useState(false);
   const orders = useSelector((store) => store.wsUserReducer.orders).reverse();
 
+
   function logoutUser() {
     dispatch(logout());
   }
-  const token = localStorage.getItem("refreshToken");
-  function submitUserInfo(evt) {
+  function submitUserInfo(evt: React.FormEvent) {
     evt.preventDefault();
     dispatch(updateUser(form.name, form.email, form.pass));
     setSwitch((buttonSwitch = false));
   }
 
-  function inputUser(evt) {
-    console.log(token);
+  function inputUser(evt: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [evt.target.name]: evt.target.value });
     setSwitch((buttonSwitch = true));
   }
 
-  function reset(evt) {
+  function reset(evt: React.FormEvent) {
     evt.preventDefault();
-    setForm({
-      email: email,
-      name: name,
-      pass: password,
-    });
+    if(password) {
+      setForm({
+        email: email,
+        name: name,
+        pass: password,
+      });
+    }
     setSwitch((buttonSwitch = false));
   }
 
   useEffect(() => {
-    setForm({
-      email: email,
-      name: name,
-      pass: password,
-    });
+    if(password) {
+      setForm({
+        email: email,
+        name: name,
+        pass: password,
+      });
+    }
   }, [email, name, password]);
 
   return (
@@ -143,10 +144,10 @@ export function Profile() {
                 />
               </div>
               <div className={`${profileStyles.buttons_wrapper} mt-6`}>
-                <Button disabled={!buttonSwitch} onClick={reset}>
+                <Button htmlType="button" disabled={!buttonSwitch} onClick={reset}>
                   Отмена
                 </Button>
-                <Button disabled={!buttonSwitch}>Сохранить</Button>
+                <Button htmlType="submit" disabled={!buttonSwitch}>Сохранить</Button>
               </div>
             </form>
           </div>
@@ -154,7 +155,7 @@ export function Profile() {
         <Route path="/profile/orders" exact>
           <div className={`${profileStyles.orders_wrapper} ml-15 pr-2`}>
             <ul className={profileStyles.orders_list}>
-              {orders.map((el, index) => (
+              {orders?.map((el, index) => (
                 <li key={index}>
                   <Link
                     to={{

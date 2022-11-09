@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types";
 import feedNumbresStyles from "./FeedsNumbers.module.css";
 
 export function FeedsNumbers() {

@@ -1,8 +1,8 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
-import ordersStyles from "./OrdersStory.module.css";
+import { IOrderProps, useSelector } from "../../services/types";
+import feedItemStyles from "./FeedItem.module.css";
 
-export function OrdersStory({ order }) {
+export function FeedItem({ order }: IOrderProps) {
   const { createdAt, number, name } = order;
   const ingredients = useSelector(
     (store) => store.ingredients.burgerIngredients
@@ -25,24 +25,26 @@ export function OrdersStory({ order }) {
   const hideItems = maxLength - 6;
 
   return (
-    <div className={`${ordersStyles.feed_item} mb-6 pt-6 pb-6 pl-6 pr-6 mr-2`}>
-      <div className={ordersStyles.content_wrapper}>
-        <div className={ordersStyles.tittle_wrapper}>
+    <div
+      className={`${feedItemStyles.feed_item} mt-6 pt-6 pb-6 pl-6 pr-6 mr-2`}
+    >
+      <div className={feedItemStyles.content_wrapper}>
+        <div className={feedItemStyles.tittle_wrapper}>
           <p className="text text_type_digits-default">#{number}</p>
           <p className="text text_type_main-default text_color_inactive">
             {createdAt}
           </p>
         </div>
         <p className="text text_type_main-medium mt-6">{name}</p>
-        <div className={`${ordersStyles.ingredient_and_price_wrapper} mt-6`}>
-          <ul className={ordersStyles.ingredients_wrapper}>
+        <div className={`${feedItemStyles.ingredient_and_price_wrapper} mt-6`}>
+          <ul className={feedItemStyles.ingredients_wrapper}>
             {maxLength <= 5 &&
               resArr.map((el, index) => (
-                <li className={ordersStyles.ingredient_box} key={index}>
-                  <div className={ordersStyles.image_wrapper}>
-                    <div className={ordersStyles.inside_image_wrapper}>
+                <li className={feedItemStyles.ingredient_box} key={index}>
+                  <div className={feedItemStyles.image_wrapper}>
+                    <div className={feedItemStyles.inside_image_wrapper}>
                       <img
-                        className={ordersStyles.image}
+                        className={feedItemStyles.image}
                         src={el.image_mobile}
                       />
                     </div>
@@ -51,11 +53,11 @@ export function OrdersStory({ order }) {
               ))}
             {maxLength >= 6 &&
               resArr.slice(0, 5).map((el, index) => (
-                <li className={ordersStyles.ingredient_box} key={index}>
-                  <div className={ordersStyles.image_wrapper}>
-                    <div className={ordersStyles.inside_image_wrapper}>
+                <li className={feedItemStyles.ingredient_box} key={index}>
+                  <div className={feedItemStyles.image_wrapper}>
+                    <div className={feedItemStyles.inside_image_wrapper}>
                       <img
-                        className={ordersStyles.image}
+                        className={feedItemStyles.image}
                         src={el.image_mobile}
                       />
                     </div>
@@ -64,19 +66,19 @@ export function OrdersStory({ order }) {
               ))}
             {maxLength > 6 &&
               resArr.slice(5, 6).map((el, index) => (
-                <li className={ordersStyles.ingredient_box} key={index}>
-                  <div className={ordersStyles.image_wrapper}>
-                    <div className={ordersStyles.inside_image_wrapper}>
-                      <div className={ordersStyles.hidden_wrapper}>
-                        <div className={ordersStyles.inside_image_wrapper}>
+                <li className={feedItemStyles.ingredient_box} key={index}>
+                  <div className={feedItemStyles.image_wrapper}>
+                    <div className={feedItemStyles.inside_image_wrapper}>
+                      <div className={feedItemStyles.hidden_wrapper}>
+                        <div className={feedItemStyles.inside_image_wrapper}>
                           <img
                             src={el.image_mobile}
-                            className={ordersStyles.hidden_image}
+                            className={feedItemStyles.hidden_image}
                           />
                         </div>
 
                         <p
-                          className={`${ordersStyles.hidden_text} text text_type_main-default`}
+                          className={`${feedItemStyles.hidden_text} text text_type_main-default`}
                         >
                           +{hideItems}
                         </p>
@@ -86,7 +88,7 @@ export function OrdersStory({ order }) {
                 </li>
               ))}
           </ul>
-          <div className={ordersStyles.price_wrapper}>
+          <div className={feedItemStyles.price_wrapper}>
             <p className="text text_type_digits-default mr-2">{totalPrice}</p>
             <CurrencyIcon type="primary" />
           </div>

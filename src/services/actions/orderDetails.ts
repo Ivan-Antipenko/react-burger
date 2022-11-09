@@ -1,5 +1,6 @@
 import { Dispatch } from "redux"
 import { getOrderNumber } from "../../utils/api"
+import { AppDispatch, AppThunk } from "../types"
 import { CLEAR_INGREDIENT_LIST } from "./constructor"
 
 export const ORDER_SENDING_REQUEST: 'ORDER_SENDING_REQUEST'  = 'ORDER_SENDING_REQUEST'
@@ -28,8 +29,8 @@ export interface IOrderModalClose {
 }
 
 
-export function sendingOrder(ingredientsId: number) {
-    return function(dispatch: Dispatch) {
+export const sendingOrder: AppThunk = (ingredientsId: number) => {
+    return function(dispatch: AppDispatch) {
         dispatch({
            type: ORDER_SENDING_REQUEST,
         })
@@ -51,10 +52,6 @@ export function sendingOrder(ingredientsId: number) {
     }
 }
 
-export function closeOrderModal() {
-    return function (dispatch: Dispatch) {
-        dispatch({
-            type: ORDER_MODAL_CLOSE
-        })
-    }
-}
+export const closeOrderModal = (): IOrderModalClose => ({
+    type: ORDER_MODAL_CLOSE
+})
