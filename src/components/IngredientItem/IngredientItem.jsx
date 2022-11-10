@@ -11,7 +11,7 @@ export function IngredientItem({ el, openModal }) {
   let counter = 0;
   const constructor = useSelector((store) => store.burgerConstructor.items);
   const constructorBuns = useSelector((store) => store.burgerConstructor.bun);
-
+  const location = useLocation();
   constructor.map((item) => {
     if (item._id === el._id) {
       counter++;
@@ -31,8 +31,6 @@ export function IngredientItem({ el, openModal }) {
     }),
   });
 
-  const location = useLocation();
-
   return (
     !isDrag && (
       <Link
@@ -41,7 +39,7 @@ export function IngredientItem({ el, openModal }) {
           state: { background: location },
         }}
       >
-        <li ref={dragRef}>
+        <li ref={dragRef} onClick={openModal}>
           <div className={burgerStyles.menu_item}>
             {counter > 0 && <Counter count={counter} />}
             <img className="ml-4 mr-4" src={el.image} />

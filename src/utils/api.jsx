@@ -21,6 +21,7 @@ export function getOrderNumber(ingredientsId) {
     }),
     headers: {
       "Content-Type": "application/json",
+      authorization: "Bearer " + getCookie("accessToken"),
     },
   }).then(checkRequest);
 }
@@ -120,6 +121,22 @@ export function getUser(token) {
 }
 
 export function updateUserInfo(name, email, pass, token) {
+  const url = "https://norma.nomoreparties.space/api/auth/user";
+  return fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + token,
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      password: pass,
+    }),
+  }).then(checkRequest);
+}
+
+export function getFeeds(name, email, pass, token) {
   const url = "https://norma.nomoreparties.space/api/auth/user";
   return fetch(url, {
     method: "PATCH",

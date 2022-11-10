@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, ADD_INGREDIENT_BUN, DELETE_INGREDIENT, DROP_INGREDIENT } from "../actions/constructor";
+import { ADD_INGREDIENT, ADD_INGREDIENT_BUN, DELETE_INGREDIENT, DROP_INGREDIENT, CLEAR_INGREDIENT_LIST } from "../actions/constructor";
 
 const initialConstructorState = {
     items: [],
@@ -9,6 +9,7 @@ const initialConstructorState = {
 export function constructorReducer(state = initialConstructorState, action) {
     switch (action.type) {
         case ADD_INGREDIENT_BUN: {
+            
             return {
                 ...state,
                 bun: action.data,
@@ -20,6 +21,12 @@ export function constructorReducer(state = initialConstructorState, action) {
                 ...state,
                 items: [...state.items, action.data],
                 cash: state.cash += action.data.price,
+            }
+        }
+        case CLEAR_INGREDIENT_LIST: {
+            return {
+                ...state,
+                items: [],
             }
         }
         case DELETE_INGREDIENT: {

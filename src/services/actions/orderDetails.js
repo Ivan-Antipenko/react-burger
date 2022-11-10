@@ -1,4 +1,5 @@
 import { getOrderNumber } from "../../utils/api"
+import { letClear } from "./constructor"
 
 export const ORDER_SENDING_REQUEST = 'ORDER_SENDING_REQUEST'
 export const ORDER_SENDING_SUCCESS = 'ORDER_SENDING_SUCCESS'

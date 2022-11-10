@@ -132,6 +132,7 @@ export function updateToken() {
         dispatch({
             type: UPDATE_TOKEN_REQUEST
         })
+        console.log('asdsadasdasd')
         const token = localStorage.getItem('refreshToken')
         refreshToken(token)
         .then((res) => {
@@ -199,21 +200,19 @@ export function getUserInfo() {
                 data: res
             })
         })
-        .catch(() => {
-            dispatch({
-                type: GET_USER_FAILED,
-            })
-            const token = localStorage.getItem('refreshToken')
-            refreshToken(token)
+        .catch(() => { 
+            updateToken();
+            const newToken = getCookie("accessToken")
+            getUser(newToken)
             .then((res) => {
                 dispatch({
-                    type: UPDATE_TOKEN_SUCCESS,
+                    type: GET_USER_SUCCESS,
                     data: res
                 })
             })
             .catch(() => {
                 dispatch({
-                    type: UPDATE_TOKEN_FAILED
+                    type: GET_USER_FAILED
                 })
             })
         })

@@ -23,7 +23,9 @@ export function NavBar() {
         <li>
           <NavLink
             className={`${navBarStyles.link_wrapper} pt-4 pb-4 pl-5 pr-5 ml-2`}
-            to={{ pathname: `` }}
+            to="/feed"
+            activeClassName={navBarStyles.link_wrapper_active}
+            exact
           >
             <ListIcon type="primary" />
 
