@@ -1,5 +1,9 @@
-import { IIngrProps } from "../../../services/types";
 import ingredientStyles from "./Ingredient.module.css";
+
+export interface IIngrProps {
+  text: string,
+  value: number
+}
 
 export function Ingredient(props: IIngrProps) {
   return (

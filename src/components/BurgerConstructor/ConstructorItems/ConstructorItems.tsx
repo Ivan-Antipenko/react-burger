@@ -1,9 +1,13 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop } from "react-dnd";
-import { IItemBun, useDispatch, useSelector } from "../../../services/types";
+import { IItem, useDispatch, useSelector } from "../../../services/types";
 import { addBun, addIngredient } from "../../../services/actions/constructor";
 import constructorItemsStyles from "../ConstructorItems/ConstructorItems.module.css";
 import { ConstructorList } from "../ConstructorList/ConstructorList";
+
+export interface IItemBun extends IItem {
+  type: "bun";
+};
 
 export function ConstructorItems() {
   const dispatch = useDispatch();
@@ -26,7 +30,7 @@ export function ConstructorItems() {
       className={`${constructorItemsStyles.constructor_wrapper} mt-25 pr-4`}
       ref={dropTarget}
     >
-      {dataBun.price === 0 ? (
+      {dataBun === null ? (
         <div className={constructorItemsStyles.constructor_list_empty}>
           <p className={constructorItemsStyles.constructor_list_empty_title}>
             Перетащите нужную булочку сюда
@@ -38,9 +42,9 @@ export function ConstructorItems() {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${dataBun.name}(верх)`}
-              price={dataBun.price}
-              thumbnail={dataBun.image}
+              text={`${dataBun?.name}(верх)`}
+              price={dataBun?.price!}
+              thumbnail={dataBun?.image!}
             />
           </div>
 
@@ -62,9 +66,9 @@ export function ConstructorItems() {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${dataBun.name}(низ)`}
-              price={dataBun.price}
-              thumbnail={dataBun.image}
+              text={`${dataBun?.name}(низ)`}
+              price={dataBun?.price!}
+              thumbnail={dataBun?.image!}
             />
           </div>
         </>

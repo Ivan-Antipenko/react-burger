@@ -3,13 +3,18 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
-import { IConstructorItem, useDispatch } from "../../../services/types";
+import { IItem, useDispatch } from "../../../services/types";
 import {
   deleteIngredient,
   dropIngredient,
 } from "../../../services/actions/constructor";
 import { useRef } from "react";
 import counstructorItemStyles from "./ConstructorItem.module.css";
+
+interface IConstructorItem {
+  el: IItem;
+  index: number
+}
 
 export function ConstructorItem(props: IConstructorItem) {
 
@@ -29,13 +34,12 @@ export function ConstructorItem(props: IConstructorItem) {
 
   const [, drop] = useDrop({
     accept: "element",
-    drop(item: any) {
+    drop(item: {index: number}) {
       if (!ref.current) {
         return;
       }
       const dragIndex = item.index;
       const hoverIndex = index;
-      const res = { dragIndex, hoverIndex };
       dispatch(dropIngredient({ dragIndex, hoverIndex }));
     },
   });

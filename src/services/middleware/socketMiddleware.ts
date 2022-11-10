@@ -1,6 +1,15 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { getCookie } from "../../utils/cookie";
-import { IWsActions } from '../types';
+
+export interface IWsActions {
+  wsInit: string;
+  wsSendMessage: string;
+  onOpen: string;
+  onClose: string;
+  onError: string;
+  onMessage: string;
+}
+
 export function socketMiddleware(url: string, actions: IWsActions, isLogin: boolean = false): Middleware {
   return (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null

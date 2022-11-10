@@ -14,7 +14,6 @@ export type TWsActions =
 | IWsConnectedClosed 
 | IWsConnectedFailed 
 | IWsGetMessage 
-| IWsSendMessage
 
 
 export interface IWsConnectedStart {
@@ -38,10 +37,6 @@ export interface IWsGetMessage {
 	readonly payload: IWsOrders
 }
 
-export interface IWsSendMessage {
-	readonly type: typeof WS_SEND_ORDERS
-	readonly payload: any
-}
 
 
 export const wsConnectedStart = (): IWsConnectedStart => ({
@@ -62,10 +57,5 @@ export const wsConnectedFailed = (): IWsConnectedFailed => ({
 
 export const wsGetMessage = (order: IWsOrders): IWsGetMessage => ({
 	type: WS_GET_ORDERS,
-	payload: order
-});
-
-export const wsSendMessage = (order: any): IWsSendMessage => ({
-	type: WS_SEND_ORDERS,
 	payload: order
 });

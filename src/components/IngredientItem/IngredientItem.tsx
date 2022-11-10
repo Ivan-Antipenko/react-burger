@@ -4,8 +4,13 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useSelector, IIngredientProps} from "../../services/types";
+import { useSelector, IItem} from "../../services/types";
 import { Link, useLocation } from "react-router-dom";
+
+export interface IIngredientProps {
+  el: IItem;
+  onClick: () => void
+}
 
 export const IngredientItem = ({ el }: IIngredientProps) => {
   let counter = 0;

@@ -45,10 +45,6 @@ export interface IItem {
     uniCode? : number | string
 };
 
-export interface IItemBun extends IItem {
-    type: "bun";
-};
-
 export interface IWsOrder {
     createdAt: string;
     ingredients: string[];
@@ -66,43 +62,7 @@ export interface IWsOrders {
     totalToday: number,
 }
 
-export type TIngrModal = null | Object;
 export type TOrderNumber = null | number;
-
-export interface IDropObject {
-    dragIndex: number,
-    hoverIndex: number
-}
-
-export interface IUserInfo {
-    success: boolean,
-    accessToken: string,
-    refreshToken: string,
-    user: {
-        email: string,
-        name: string
-    }
-}
-
-export interface IChangeUserInfo {
-        email: string,
-        name: string  
-}
-
-export interface IUpdateToken {
-    success: boolean,
-    accessToken: string,
-    refreshToken: string
-}
-
-export interface IWsActions {
-    wsInit: string;
-    wsSendMessage: string;
-    onOpen: string;
-    onClose: string;
-    onError: string;
-    onMessage: string;
-}
 
 export interface IComponentProps {
     children: React.ReactNode;
@@ -112,26 +72,3 @@ export interface IComponentProps {
 export interface IOrderProps {
     order: IWsOrder
 }
-
-export interface IIngredientProps {
-    el: IItem;
-    onClick: () => void
-}
-
-export interface IIngrProps {
-   text: string,
-   value: number
-}
-
-export interface IIngrListProps {
-    data: IItem[]
- }
-
- export interface IConstructorItem {
-    el: IItem;
-    index: number
- }
-
- export interface IBackground {
-    background: string
- }

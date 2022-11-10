@@ -14,7 +14,7 @@ export function OrderInfo() {
   const order = orders?.find((el) => el._id === id);
   const ingrList = order?.ingredients;
   let summ = 0;
-  let resArr: IItem[] = [];
+  const resArr: IItem[] = [];
   if (ingrList) {
     for (let el of ingredients) {
       for (let id of ingrList) {

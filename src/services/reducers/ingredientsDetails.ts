@@ -1,6 +1,6 @@
 import { INGREDIENTS_MODAL_CLOSE, INGREDIENTS_MODAL_OPENED, TIngredientsModalActions } from "../actions/ingredientsDetails"
-import { TIngrModal } from "../types"
 
+export type TIngrModal = null | Object;
 
 export interface IInitialStateModal  {
     isModalOpen: boolean,

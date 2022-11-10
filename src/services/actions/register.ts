@@ -1,7 +1,28 @@
-import { Dispatch } from "redux"
 import { getUser, loginRequest, logoutRequest, recoveryPass, refreshToken, registerRequest, resetPassRequest, updateUserInfo } from "../../utils/api"
 import { deleteCookie, getCookie} from "../../utils/cookie"
-import { AppDispatch, AppThunk, IChangeUserInfo, IUpdateToken, IUserInfo} from "../types"
+import { AppDispatch, AppThunk} from "../types"
+
+interface IUpdateToken {
+    success: boolean,
+    accessToken: string,
+    refreshToken: string
+}
+
+interface IChangeUserInfo {
+    email: string,
+    name: string  
+}
+
+interface IUserInfo {
+    success: boolean,
+    accessToken: string,
+    refreshToken: string,
+    user: {
+        email: string,
+        name: string
+    }
+}
+
 export const REGISTER_FORM_CHANGE_VALUE: 'REGISTER_FORM_CHANGE_VALUE' = 'REGISTER_FORM_CHANGE_VALUE'
 export const PROFILE_FORM_CHANGE_VALUE: 'REGISTER_FORM_CHANGE_VALUE' = 'REGISTER_FORM_CHANGE_VALUE'
 export const LOGIN_FORM_CHANGE_VALUE: 'LOGIN_FORM_SET_VALUE' = 'LOGIN_FORM_SET_VALUE'
@@ -387,8 +408,8 @@ export const updateUser: AppThunk = (name: string, email: string, pass: string) 
                 })
             })
             .then(() => {
-                const token: any = getCookie("accessToken")
-                updateUserInfo(name, email, pass, token)
+                const token: string | undefined = getCookie("accessToken")
+                updateUserInfo(name, email, pass, token!)
                 .then((res) => {
                     dispatch({
                         type: CHANGE_USER_SUCCESS,

@@ -1,7 +1,11 @@
-import { IIngrListProps, IItem, useDispatch } from "../../../services/types";
+import { IItem, useDispatch } from "../../../services/types";
 import { openModal } from "../../../services/actions/ingredientsDetails";
 import { IngredientItem } from "../../IngredientItem/IngredientItem";
 import ingredientsListStyles from "../IngredientList/IngredientsList.module.css";
+
+interface IIngrListProps {
+  data: IItem[]
+}
 
 export function IngredientsList({ data }: IIngrListProps) {
   const dispatch = useDispatch();
