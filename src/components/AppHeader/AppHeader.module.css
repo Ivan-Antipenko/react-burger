@@ -5,29 +5,8 @@
   margin: auto;
 }
 
-.header_сontent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1280px;
-  max-height: 56px;
-  margin: auto;
-}
-
 .nav_box {
   display: flex;
-}
-
-.nav_list {
-  list-style-type: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.link_wrapper {
-  display: flex;
-  cursor: pointer;
 }
 
 

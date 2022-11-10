@@ -1,0 +1,11 @@
+.nav_list {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.link_wrapper {
+    display: flex;
+    cursor: pointer;
+}

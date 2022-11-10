@@ -2,43 +2,4 @@
     width: 600px;
 }
 
-.constructor_wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
 
-
-.constructor_list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    overflow: auto;
-    max-height: calc(100vh - 590px);
-}
-
-.constructor_list::-webkit-scrollbar {
-    background-color: #2F2F37;
-    width: 8px;
-}
-
-.constructor_list::-webkit-scrollbar-thumb {
-    background-color: #8585AD;
-}
-
-
-.constructor_list_item {
-    display: flex;
-    align-items: center;
-}
-
-.constructor_button_wrapper {
-   display: flex;
-   justify-content: right;
-}
-
-
-.constructor_price_box {
-    display: flex;
-    align-items: center;
- }
