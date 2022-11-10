@@ -4,6 +4,10 @@
     justify-content: center;
 }
 
+.tab_wrapper {
+    display: flex;
+}
+
 .menu_list {
     max-width: 100%;
     display: flex;
@@ -20,6 +24,7 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    position: relative;
 }
 
 .item_price_box {
