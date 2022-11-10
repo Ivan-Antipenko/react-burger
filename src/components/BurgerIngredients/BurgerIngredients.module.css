@@ -33,6 +33,7 @@
 }
 
 .ingredients_box {
+    margin-top: 10px;
     height: calc(100vh - 324px);
     overflow: auto;
 }

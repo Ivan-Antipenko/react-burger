@@ -8,7 +8,7 @@ import {
   deleteIngredient,
   DROP_INGREDIENT,
 } from "../../../services/actions/constructor";
-import useRef from "react";
+import { useRef } from "react";
 import counstructorItemStyles from "./ConstructorItem.module.css";
 
 export function ConstructorItem(props) {

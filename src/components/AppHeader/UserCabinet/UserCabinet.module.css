@@ -1,4 +1,9 @@
 .link_wrapper {
     display: flex;
     cursor: pointer;
+    color: #8585AD;
+}
+
+.link_wrapper_active {
+    color: white;
 }

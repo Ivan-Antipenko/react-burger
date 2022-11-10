@@ -3,10 +3,12 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { sendingOrder } from "../../../services/actions/orderDetails";
 import ButtonPriceWrapperStyles from "./ButtonPriceWrapper.module.css";
 
 export function ButtonPriceWrapper() {
+  const isLogin = useSelector((store) => store.register.isLogin);
   const dispatch = useDispatch();
   function sendOrder(orderId) {
     dispatch(sendingOrder(orderId));
@@ -27,15 +29,30 @@ export function ButtonPriceWrapper() {
         <p className="text text_type_digits-medium mr-2">{cash}</p>
         <CurrencyIcon type="primary" size="large" />
       </div>
-      {ingredients.length === 0 ? (
-        <Button type="primary" size="large" disabled>
-          Оформить заказ
-        </Button>
-      ) : (
-        <Button type="primary" size="large" onClick={() => sendOrder(orderId)}>
-          Оформить заказ
-        </Button>
-      )}
+      <div>
+        {!isLogin && (
+          <Link to="/login">
+            <Button
+              type="primary"
+              size="large"
+              disabled={ingredients.length === 0}
+            >
+              Оформить заказ
+            </Button>
+          </Link>
+        )}
+
+        {isLogin && (
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => sendOrder(orderId)}
+            disabled={ingredients.length === 0}
+          >
+            Оформить заказ
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
