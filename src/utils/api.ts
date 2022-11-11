@@ -1,6 +1,36 @@
+import { IItem, IWsOrder } from "../services/types";
 import { getCookie } from "./cookie";
 
-export function checkRequest(res: Response) {
+
+interface IIngredientsRequest {
+  data: IItem[];
+  success: boolean;
+};
+
+interface IGetUserRequest {
+  success: boolean,
+  user: {
+    email: string,
+    name: string
+  }
+  accessToken: string;
+  refreshToken: string;
+}
+
+interface IUserLogoutRequest {
+  message: string;
+  success: boolean;
+  refreshToken: string;
+};
+
+interface IGetOrdersDetails {
+  name: string;
+  order: IWsOrder;
+  success: boolean;
+};
+
+
+const checkRequest = <I> (res: Response): Promise<I> => {
   if (res.ok) {
     return res.json();
   }
@@ -9,7 +39,7 @@ export function checkRequest(res: Response) {
 
 export function getData() {
   const url = "https://norma.nomoreparties.space/api/ingredients";
-  return fetch(url).then(checkRequest);
+  return fetch(url).then((res) => checkRequest<IIngredientsRequest>(res));
 }
 
 export function getOrderNumber(ingredientsId: number) {
@@ -23,7 +53,7 @@ export function getOrderNumber(ingredientsId: number) {
       "Content-Type": "application/json",
       authorization: "Bearer " + getCookie("accessToken"),
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetOrdersDetails>(res));
 }
 
 export function registerRequest(name: string, email: string, pass: string) {
@@ -38,7 +68,7 @@ export function registerRequest(name: string, email: string, pass: string) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function loginRequest(email: string, pass: string) {
@@ -52,7 +82,7 @@ export function loginRequest(email: string, pass: string) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function refreshToken(token: string) {
@@ -65,7 +95,7 @@ export function refreshToken(token: string) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function logoutRequest() {
@@ -79,7 +109,7 @@ export function logoutRequest() {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IUserLogoutRequest>(res));
 }
 
 export function recoveryPass(email: string) {
@@ -92,7 +122,7 @@ export function recoveryPass(email: string) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function resetPassRequest(pass: string | number, code: string | number) {
@@ -106,7 +136,7 @@ export function resetPassRequest(pass: string | number, code: string | number) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function getUser(token: string) {
@@ -117,7 +147,7 @@ export function getUser(token: string) {
       "Content-Type": "application/json",
       authorization: "Bearer " + token,
     },
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function updateUserInfo(name: string, email: string, pass: string | number, token: string) {
@@ -133,7 +163,7 @@ export function updateUserInfo(name: string, email: string, pass: string | numbe
       email: email,
       password: pass,
     }),
-  }).then(checkRequest);
+  }).then((res) => checkRequest<IGetUserRequest>(res));
 }
 
 export function getFeeds(name: string, email: string, pass: string | number, token: string) {

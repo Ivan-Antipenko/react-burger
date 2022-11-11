@@ -1,5 +1,5 @@
 import { getData } from "../../utils/api"
-import { AppDispatch, AppThunk } from "../types"
+import { AppDispatch, AppThunk, IItem } from "../types"
 
 export const INGREDIENTS_UPLOAD_REQUEST: 'INGREDIENTS_UPLOAD_REQUEST'  = 'INGREDIENTS_UPLOAD_REQUEST'
 export const INGREDIENTS_UPLOAD_SUCCESS: 'INGREDIENTS_UPLOAD_SUCCESS' = 'INGREDIENTS_UPLOAD_SUCCESS'
@@ -13,7 +13,7 @@ export interface IIngredientUploadRequest {
 
 export interface IIngredientUploadSuccess {
     readonly type: typeof INGREDIENTS_UPLOAD_SUCCESS;
-    readonly ingredients: []
+    readonly ingredients: IItem[]
 }
 
 export interface IIngredientUploadFailed {

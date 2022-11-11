@@ -248,6 +248,7 @@ export const login: AppThunk = (email: string, pass: string) => {
         })
         loginRequest(email, pass)
         .then((res) => {
+            console.log(res)
             dispatch({
                 type: LOGIN_SENDING_SUCCESS,
                 data: res,
